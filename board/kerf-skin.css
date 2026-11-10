@@ -70,8 +70,8 @@
 /* ---------- controls ---------- */
 .k-controls { position: absolute; inset: 0; pointer-events: none; z-index: 3; }
 .k-controls > * { pointer-events: auto; }
-.k-controls[data-hidden] .k-bar,
-.k-controls[data-hidden] .k-timetab { transform: translateY(calc(100% + 40px)); }
+.k-controls[data-hidden] .k-bar { transform: translateY(calc(100% + 4px)); }
+.k-controls[data-hidden] .k-timetab { transform: translateY(calc(100% + var(--k-band) + 4px)); }
 
 .k-bar {
   position: absolute; left: 0; right: 0; bottom: 0;
