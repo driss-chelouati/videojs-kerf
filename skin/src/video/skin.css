@@ -763,11 +763,10 @@
       transform-origin: 100% 100%;
       /* align=end puts the menu's right edge on the gear's; one button and a gap more puts it on the frame. */
       --media-popover-align-offset: calc(var(--kerf-btn) + 2px);
+      /* No size transition: the menu is placed against the frame's right edge at its final size and only rises. */
       transition:
         opacity var(--kerf-rise) var(--kerf-ease-out),
-        clip-path var(--kerf-rise) var(--kerf-ease-out),
-        height var(--kerf-rise) var(--kerf-ease-out),
-        width var(--kerf-rise) var(--kerf-ease-out);
+        clip-path var(--kerf-rise) var(--kerf-ease-out);
     }
 
     .kerf-menu::after {
