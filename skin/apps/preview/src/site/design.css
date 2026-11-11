@@ -1323,17 +1323,6 @@ figcaption b {
   grid-column: span 2;
 }
 
-.acard--proof {
-  grid-column: 1 / -1;
-  background: color-mix(in oklab, var(--accent) 10%, var(--panel));
-  box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--accent) 40%, transparent);
-}
-
-.acard--proof b {
-  color: var(--ink);
-  font-weight: 500;
-}
-
 .contrast {
   display: flex;
   gap: 10px;
@@ -1472,8 +1461,7 @@ figcaption b {
     grid-template-columns: minmax(0, 1fr);
   }
 
-  .acard--wide,
-  .acard--proof {
+  .acard--wide {
     grid-column: auto;
   }
 
