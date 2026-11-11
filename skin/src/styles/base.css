@@ -2,8 +2,6 @@
 /* Preset adaptations and preference overrides win over theme tokens regardless of import order. */
 @layer base.theme, base.preset, base.preferences;
 
-@import "./themes/theme.css";
-@import "./themes/preferences.css";
 
 /* Interpolate progress before chapter bounds are applied. */
 @property --media-slider-fill {

@@ -1,2 +1,4 @@
 node_modules/
 research/pkg/
+skin/apps/preview/public/media/*.mp4
+skin/dist/
