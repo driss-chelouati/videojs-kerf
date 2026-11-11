@@ -80,6 +80,55 @@
         </div>
       </section>
 
+      <section class="sec wrap" aria-labelledby="home-h">
+        <div class="sh"><h2 id="home-h">At home in any product</h2><p>The frame takes the host's surface, accent and radius. Three properties, no rebuild.</p></div>
+        <div class="hosts">
+          <div class="seg seg--3 host-tabs" role="radiogroup" aria-label="Host product">
+            <label><input type="radio" name="host" value="course" checked /><span>Course platform</span></label>
+            <label><input type="radio" name="host" value="stream" /><span>Streaming app</span></label>
+            <label><input type="radio" name="host" value="notes" /><span>Release notes</span></label>
+          </div>
+          <div class="host-stage" id="host-stage" data-host="course">
+            <article class="host host--course" aria-label="Course platform example">
+              <header class="host-bar"><i class="host-mark"></i><b>Fieldwork</b><nav><span>Courses</span><span class="on">Lessons</span><span>Notes</span></nav></header>
+              <div class="host-body">
+                <div class="host-main">
+                  <p class="host-k">Lesson 3 of 8</p>
+                  <h3>Write a brief your agents can follow</h3>
+                  <div class="host-player" id="host-course"></div>
+                </div>
+                <aside class="host-side">
+                  <p class="host-k">In this course</p>
+                  <ol><li>Start with the outcome</li><li>Name the constraints</li><li class="on">Write the brief</li><li>Review the first pass</li><li>Ship it</li></ol>
+                </aside>
+              </div>
+              <p class="host-code mono">--media-accent-color: #3155ff; --media-border-radius: 12px; data-surface="light"</p>
+            </article>
+            <article class="host host--stream" aria-label="Streaming app example">
+              <header class="host-bar"><i class="host-mark"></i><b>Afterglow</b><nav><span class="on">Watch</span><span>Library</span><span>Search</span></nav></header>
+              <div class="host-body">
+                <div class="host-main">
+                  <div class="host-player" id="host-stream"></div>
+                  <h3>The Sparvek launch</h3>
+                  <p class="host-meta">Short film, 46 s, 2026</p>
+                </div>
+              </div>
+              <p class="host-code mono">--media-accent-color: #f2552c; --media-border-radius: 26px</p>
+            </article>
+            <article class="host host--notes" aria-label="Release notes example">
+              <header class="host-bar"><i class="host-mark"></i><b>Tessel</b><nav><span>Product</span><span class="on">Changelog</span><span>Docs</span></nav></header>
+              <div class="host-body host-body--narrow">
+                <p class="host-k">November 2026</p>
+                <h3>Agents now explain every step</h3>
+                <p class="host-p">Each run leaves a receipt: what was read, what was done, what is waiting for you.</p>
+                <div class="host-player" id="host-notes"></div>
+              </div>
+              <p class="host-code mono">--media-accent-color: #6b5cf6; --media-border-radius: 16px; data-surface="light"</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
       <section class="sec wrap">
         <div class="sh"><h2>States</h2><p>Same frame, same radii, one accent. Drawn here; every one of them runs on the Player page.</p></div>
         <div class="three" id="states"></div>
@@ -108,17 +157,46 @@
               <dt>Reduced</dt><dd>Every change is instant. Tabs still appear at their trigger.</dd>
             </dl>
           </div>
-          <div class="panel">
-            <h3>Access</h3>
-            <dl class="rows">
-              <dt>Contrast</dt><dd>Controls never sit on footage. Ink on frame 17:1 dark, 18:1 light.</dd>
-              <dt>Focus</dt><dd>2 px ink ring with a 2 px cut on every control, menu item and blade.</dd>
-              <dt>Keyboard</dt><dd>Space, arrows, J, L, M, F, C. Escape closes a menu and returns focus.</dd>
-              <dt>Transparency</dt><dd>Nothing to remove: every surface is already solid.</dd>
-              <dt>Forced colours</dt><dd>Canvas frame, CanvasText ink, Highlight fill and focus.</dd>
-              <dt>Languages</dt><dd>Labels from Video.js i18n. Right to left mirrors the notches.</dd>
-            </dl>
-          </div>
+        </div>
+      </section>
+
+      <section class="sec wrap" aria-labelledby="access-h">
+        <div class="sh"><h2 id="access-h">Made for everyone</h2><p>Accessibility is the structure, not a layer on top.</p></div>
+        <div class="access">
+          <article class="acard acard--wide">
+            <h3>Readable over any picture</h3>
+            <p>Controls never sit on footage. They sit on the frame: ink on frame is 17:1 on dark and 18:1 on light, the same over a white sky or a black night.</p>
+            <div class="contrast"><span class="cx cx--dark"><b>17:1</b> dark</span><span class="cx cx--light"><b>18:1</b> light</span></div>
+          </article>
+          <article class="acard">
+            <h3>Every control by keyboard</h3>
+            <div class="keys"><kbd>Space</kbd><kbd>K</kbd><kbd>←</kbd><kbd>→</kbd><kbd>J</kbd><kbd>L</kbd><kbd>↑</kbd><kbd>↓</kbd><kbd>M</kbd><kbd>C</kbd><kbd>F</kbd><kbd>Esc</kbd></div>
+            <p>Tab follows the screen, left to right. Escape closes a menu and returns focus to its button.</p>
+          </article>
+          <article class="acard">
+            <h3>Focus you can see</h3>
+            <p>A 2 px ink ring with a 2 px cut on every button, menu item and on the blade itself.</p>
+          </article>
+          <article class="acard">
+            <h3>Big enough for a thumb</h3>
+            <p>44 px targets on every screen size. The seek bar is 44 px tall, the blade 24 by 44.</p>
+          </article>
+          <article class="acard">
+            <h3>Calm on request</h3>
+            <p>Reduced motion makes every change instant. Reduced transparency changes nothing: every surface is already solid.</p>
+          </article>
+          <article class="acard">
+            <h3>Named for screen readers</h3>
+            <p>Labels, states and announcements come from Video.js and its translations, including right to left.</p>
+          </article>
+          <article class="acard">
+            <h3>Forced colours</h3>
+            <p>Canvas for the frame, CanvasText for ink, Highlight for the fill and the focus ring.</p>
+          </article>
+          <article class="acard acard--proof">
+            <h3>Checked, not assumed</h3>
+            <p><b class="mono">axe-core 4.10: 0 violations</b> on both pages, dark and light, with the drawer and the settings menu open. Keyboard, focus, reduced motion and forced colours tested in Chromium.</p>
+          </article>
         </div>
       </section>
 
@@ -128,6 +206,40 @@
           <p>Most players float their controls over the picture, then fight the picture for contrast with gradients and blur. Kerf cuts the picture instead. The controls live in a notch of the player's own frame, a solid surface in the host product's colour, so they read the same over a white sky or a black night.</p>
           <p>Everything that opens rises out of that frame from the control that asked for it, and sinks back when the film plays. Transient feedback hangs from the top edge. One radius system, one accent, the official solid icons, tabular time. Familiar to use, unmistakable to look at.</p>
         </div>
+      </section>
+
+      <section class="sec wrap" aria-labelledby="install-h">
+        <div class="sh"><h2 id="install-h">Add Kerf to any page</h2><p>Plain HTML and CSS on Video.js 10. Copy it in, own it.</p></div>
+        <ol class="steps">
+          <li class="step">
+            <p class="step-n mono">1</p>
+            <div><h3>Install Video.js 10</h3>
+            <pre class="code"><code>npm install @videojs/html</code></pre></div>
+          </li>
+          <li class="step">
+            <p class="step-n mono">2</p>
+            <div><h3>Copy the skin</h3><p>Take <code class="mono">src/video/</code> and <code class="mono">src/styles/</code> from the Kerf repository, then import it once.</p>
+            <pre class="code"><code>import './video/skin';</code></pre></div>
+          </li>
+          <li class="step">
+            <p class="step-n mono">3</p>
+            <div><h3>Wrap your video</h3><p>Put your media where the skin marks it. Any Video.js media works: a video file, HLS or Mux.</p>
+            <pre class="code"><code>&lt;video-player&gt;
+  &lt;!-- skin.html, with your media inside --&gt;
+  &lt;mux-video src="https://stream.mux.com/{id}.m3u8"&gt;&lt;/mux-video&gt;
+&lt;/video-player&gt;</code></pre></div>
+          </li>
+          <li class="step">
+            <p class="step-n mono">4</p>
+            <div><h3>Set your look</h3>
+            <pre class="code"><code>.kerf {
+  --media-accent-color: #d4f53c;
+  --media-border-radius: 20px;
+}
+/* on the skin root: data-surface="light" | "auto",
+   data-motion="reduce", data-poster-controls="show" */</code></pre></div>
+          </li>
+        </ol>
       </section>
 
       <section class="closer wrap">
