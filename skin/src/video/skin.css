@@ -570,15 +570,11 @@
       padding: 6px 6px 7px;
       border-radius: var(--kerf-ri) var(--kerf-ri) 0 0;
       pointer-events: none;
-      opacity: 0;
       clip-path: var(--kerf-clip-shut);
-      transition:
-        opacity var(--kerf-sink) var(--kerf-ease-in),
-        clip-path var(--kerf-sink) var(--kerf-ease-in);
+      transition: clip-path var(--kerf-sink) var(--kerf-ease-in);
     }
 
     .kerf-seek:is([data-pointing], [data-dragging]) .kerf-preview {
-      opacity: 1;
       clip-path: var(--kerf-clip-open);
       transition-duration: var(--kerf-rise);
       transition-timing-function: var(--kerf-ease-out);
@@ -646,13 +642,10 @@
       --media-tooltip-boundary-offset: var(--kerf-pad);
       --media-popover-boundary-offset: var(--kerf-pad);
       clip-path: var(--kerf-clip-open);
-      transition:
-        opacity var(--kerf-rise) var(--kerf-ease-out),
-        clip-path var(--kerf-rise) var(--kerf-ease-out);
+      transition: clip-path var(--kerf-rise) var(--kerf-ease-out);
     }
 
     .kerf-popup:is([data-starting-style], [data-ending-style]) {
-      opacity: 0;
       clip-path: var(--kerf-clip-shut);
     }
 
@@ -763,10 +756,9 @@
       transform-origin: 100% 100%;
       /* align=end puts the menu's right edge on the gear's; one button and a gap more puts it on the frame. */
       --media-popover-align-offset: calc(var(--kerf-btn) + 2px);
-      /* No size transition: the menu is placed against the frame's right edge at its final size and only rises. */
-      transition:
-        opacity var(--kerf-rise) var(--kerf-ease-out),
-        clip-path var(--kerf-rise) var(--kerf-ease-out);
+      /* No size transition and no fade: the menu is placed against the frame's right edge at its final size, and it
+         rises and sinks as solid frame material. */
+      transition: clip-path var(--kerf-rise) var(--kerf-ease-out);
     }
 
     .kerf-menu::after {
@@ -1100,13 +1092,10 @@
 
     .kerf-error {
       clip-path: var(--kerf-clip-open);
-      transition:
-        opacity var(--kerf-rise) var(--kerf-ease-out),
-        clip-path var(--kerf-rise) var(--kerf-ease-out);
+      transition: clip-path var(--kerf-rise) var(--kerf-ease-out);
     }
 
     .kerf-error:is([data-starting-style], [data-ending-style]) {
-      opacity: 0;
       clip-path: var(--kerf-clip-shut);
     }
 
@@ -1169,9 +1158,7 @@
       font-variant-numeric: tabular-nums;
       white-space: nowrap;
       clip-path: var(--kerf-clip-open-down);
-      transition:
-        opacity var(--kerf-rise) var(--kerf-ease-out),
-        clip-path var(--kerf-rise) var(--kerf-ease-out);
+      transition: clip-path var(--kerf-rise) var(--kerf-ease-out);
     }
 
     /* Fillets meet the top edge instead of the band. */
@@ -1186,7 +1173,6 @@
     }
 
     .kerf-indicator:not([data-open]) {
-      opacity: 0;
       clip-path: var(--kerf-clip-shut-down);
       transition-duration: var(--kerf-sink);
       transition-timing-function: var(--kerf-ease-in);
