@@ -1032,6 +1032,32 @@ kbd {
   display: none;
 }
 
+.foot-gh {
+  margin-left: auto;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  box-shadow: inset 0 0 0 1px var(--line);
+  color: var(--ink-2);
+  transition: color 0.15s, box-shadow 0.15s;
+}
+
+.foot-gh:hover {
+  color: var(--ink);
+  box-shadow: inset 0 0 0 1px var(--line-2);
+}
+
+.foot-gh .lucide {
+  width: 16px;
+  height: 16px;
+}
+
+.foot-gh + .powered {
+  margin-left: -12px;
+}
+
 .powered {
   margin-left: auto;
   display: inline-flex;

@@ -90,6 +90,7 @@ export function frameFoot(): string {
     <footer class="foot">
       <a class="foot-brand" href="./index.html" aria-label="Kerf">${lockup}</a>
       <p class="foot-line">A Video.js 10 skin by <a href="https://drisschelouati.dev" target="_blank" rel="noopener">Driss Chelouati</a>. Film: the Sparvek launch, by Orvio. Apache 2.0.</p>
+      <a class="foot-gh" href="https://github.com/driss-chelouati/videojs-kerf" target="_blank" rel="noopener" aria-label="Kerf source on GitHub" title="Source on GitHub">${icon('github')}</a>
       <a class="powered" href="https://videojs.org" target="_blank" rel="noopener"><span>Powered by</span><span class="vjs-logo" role="img" aria-label="Video.js">${videojsLogo}</span></a>
     </footer>`;
 }
