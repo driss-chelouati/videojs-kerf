@@ -27,6 +27,10 @@
       --kerf-band: calc(var(--kerf-btn) + var(--kerf-gap));
       --kerf-fillet: 10px;
       --kerf-tab: 31px;
+      --kerf-tile: 76px;
+      --kerf-tile-icon: 30px;
+      --kerf-tile-r: var(--kerf-r);
+      --kerf-tile-gap: 6px;
 
       /* Surface, dark by default. */
       --kerf-surface: #141416;
@@ -37,6 +41,7 @@
       --kerf-hover: rgb(255 255 255 / 0.09);
       --kerf-edge: rgb(255 255 255 / 0.08);
       --kerf-ring: var(--kerf-ink);
+      --kerf-tile-frame: #ffffff;
       --kerf-shadow:
         inset 0 0 0 1px var(--kerf-edge),
         0 1px 2px rgb(14 14 18 / 0.14),
@@ -77,7 +82,35 @@
       --kerf-hover: rgb(20 20 22 / 0.055);
       --kerf-edge: rgb(20 20 22 / 0.08);
       --kerf-accent-ink: var(--media-accent-text-color, #ffffff);
+      --kerf-tile-frame: #141416;
       color-scheme: light;
+    }
+
+    @media (prefers-color-scheme: light) {
+      :scope[data-surface="auto"] {
+        --kerf-surface: #fdfdfc;
+        --kerf-ink: #141416;
+        --kerf-ink-2: rgb(20 20 22 / 0.62);
+        --kerf-track: rgb(20 20 22 / 0.11);
+        --kerf-buffer: rgb(20 20 22 / 0.22);
+        --kerf-hover: rgb(20 20 22 / 0.055);
+        --kerf-edge: rgb(20 20 22 / 0.08);
+        --kerf-accent-ink: var(--media-accent-text-color, #ffffff);
+        --kerf-tile-frame: #141416;
+        color-scheme: light;
+      }
+    }
+
+    /* A host page can ask for reduced motion on the player alone. */
+    :scope[data-motion="reduce"] {
+      --kerf-rise: 0ms;
+      --kerf-sink: 0ms;
+      --kerf-band-move: 0ms;
+      --kerf-hidden-scale: 1;
+    }
+
+    :scope[data-motion="reduce"] .kerf-buffering .kerf-tile-icon {
+      animation: none;
     }
 
     /* Fullscreen: the frame drops to nothing, the notches stay. */
@@ -91,9 +124,18 @@
     }
 
     /* ------------------------------------------------------------------ the picture */
-    video {
+    /* Any media element (native, Mux, HLS) is clipped to the inner radius, so its box never shows at the corners. */
+    :scope > :is(video, mux-video, hls-video, dash-video, [slot="media"]) {
+      display: block;
+      width: 100%;
       border-radius: var(--kerf-ri);
-      background: #000;
+      overflow: hidden;
+      clip-path: inset(0 round var(--kerf-ri));
+      background: var(--kerf-surface);
+    }
+
+    :scope > :is(mux-video, hls-video, dash-video)::part(video) {
+      border-radius: var(--kerf-ri);
     }
 
     .kerf-poster {
@@ -102,6 +144,7 @@
       z-index: 1;
       overflow: hidden;
       border-radius: var(--kerf-ri);
+      clip-path: inset(0 round var(--kerf-ri));
       pointer-events: none;
     }
 
@@ -116,13 +159,13 @@
     }
 
     /* ------------------------------------------------------------------ the window the controls live in */
+    /* The controls' window. It clips at the frame's outer edge, so the band can run under the bezel in one piece. */
     .kerf-ui {
       position: absolute;
       inset: var(--kerf-pad);
       z-index: 2;
       display: block;
-      overflow: hidden;
-      border-radius: var(--kerf-ri);
+      clip-path: inset(calc(var(--kerf-pad) * -1) round var(--kerf-r));
       pointer-events: none;
     }
 
@@ -155,12 +198,13 @@
     /* ------------------------------------------------------------------ the band */
     .kerf-band {
       position: absolute;
-      left: 0;
-      right: 0;
-      bottom: 0;
+      left: calc(var(--kerf-pad) * -1);
+      right: calc(var(--kerf-pad) * -1);
+      bottom: calc(var(--kerf-pad) * -1);
       z-index: 2;
-      height: var(--kerf-band);
-      padding-top: var(--kerf-gap);
+      height: calc(var(--kerf-band) + var(--kerf-pad));
+      padding: var(--kerf-gap) var(--kerf-pad) var(--kerf-pad);
+      border-radius: 0 0 var(--kerf-r) var(--kerf-r);
       display: flex;
       align-items: center;
       gap: 2px;
@@ -172,8 +216,8 @@
     .kerf-band::before {
       content: "";
       position: absolute;
-      left: 0;
-      right: 0;
+      left: var(--kerf-pad);
+      right: var(--kerf-pad);
       bottom: 100%;
       height: var(--kerf-ri);
       pointer-events: none;
@@ -917,21 +961,31 @@
       left: 50%;
       top: 50%;
       z-index: 3;
-      width: 76px;
-      height: 76px;
-      margin: -38px 0 0 -38px;
+      width: var(--kerf-tile);
+      height: var(--kerf-tile);
+      margin: calc(var(--kerf-tile) / -2) 0 0 calc(var(--kerf-tile) / -2);
       display: grid;
       place-items: center;
-      border-radius: var(--kerf-r);
+      border-radius: var(--kerf-tile-r);
       background: var(--kerf-surface);
       color: var(--kerf-ink);
-      box-shadow: 0 1px 2px rgb(0 0 0 / 0.18), 0 16px 32px -16px rgb(0 0 0 / 0.5);
       outline: none;
     }
 
+    /* The tile sits inset in a thin rounded frame, concentric with it, so it holds over any poster. */
+    .kerf-tile::before {
+      content: "";
+      position: absolute;
+      inset: calc(var(--kerf-tile-gap) * -1);
+      border-radius: calc(var(--kerf-tile-r) + var(--kerf-tile-gap));
+      border: 2px solid var(--kerf-tile-frame);
+      box-shadow: 0 12px 32px -14px rgb(0 0 0 / 0.55);
+      pointer-events: none;
+    }
+
     .kerf-tile .kerf-tile-icon {
-      width: 30px;
-      height: 30px;
+      width: var(--kerf-tile-icon);
+      height: var(--kerf-tile-icon);
     }
 
     .kerf-start {
@@ -955,8 +1009,10 @@
       }
     }
 
-    .kerf-start:focus-visible {
-      box-shadow: 0 0 0 3px var(--kerf-surface), 0 0 0 5px var(--kerf-ring);
+    .kerf-start:focus-visible::before {
+      inset: calc(var(--kerf-tile-gap) * -1 - 1px);
+      border-width: 3px;
+      border-color: var(--kerf-accent);
     }
 
     .kerf-start:active {
@@ -1201,7 +1257,23 @@
     }
 
     /* ------------------------------------------------------------------ narrow players */
+    /* The centre tile steps down with the player: 76 on desktop, 64 on tablet, 56 on phone. */
+    @container kerf (width < 800px) {
+      .kerf-tile {
+        --kerf-tile: 64px;
+        --kerf-tile-icon: 26px;
+        --kerf-tile-r: max(8px, calc(var(--kerf-r) - 3px));
+      }
+    }
+
     @container kerf (width < 560px) {
+      .kerf-tile {
+        --kerf-tile: 56px;
+        --kerf-tile-icon: 22px;
+        --kerf-tile-r: max(8px, calc(var(--kerf-r) - 6px));
+        --kerf-tile-gap: 5px;
+      }
+
       .kerf-captions {
         display: none;
       }

@@ -1,0 +1,31 @@
+{
+ "name": "Kerf",
+ "logo_files": {
+  "symbol": "logo-symbol.svg",
+  "horizontal": "logo-horizontal.svg",
+  "wordmark": "logo-wordmark.svg",
+  "favicon": "logo-symbol.svg"
+ },
+ "colours": {
+  "primary": "#D4F53C",
+  "dark": "#141416",
+  "text": "#F5F5F3"
+ },
+ "mark": {
+  "type": "negative",
+  "idea": "A block cut in two by a stepped saw line: the kerf, with the step of the player's time tab.",
+  "deal": {
+   "seed": 499678025,
+   "candidate": "c1",
+   "picks": {
+    "technique": "geometric-construction",
+    "container": "tile",
+    "corners": "soft"
+   }
+  }
+ },
+ "fonts": {
+  "heading": "Geist",
+  "body": "Geist"
+ }
+}

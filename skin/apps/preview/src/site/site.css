@@ -1,0 +1,1178 @@
+/* Kerf site. Layout concept: one stage that the player owns; the customize drawer pushes it, never covers it.
+   The site's accent follows the skin's accent, so the page is always the player's own brand. */
+
+:root {
+  --bg: #0a0a0b;
+  --bg-2: #101012;
+  --panel: #131315;
+  --raise: #1c1c1f;
+  --ink: #f4f4f2;
+  --ink-2: rgb(244 244 242 / 0.64);
+  --ink-3: rgb(244 244 242 / 0.4);
+  --line: rgb(255 255 255 / 0.08);
+  --line-2: rgb(255 255 255 / 0.14);
+  --accent: #d4f53c;
+  --accent-ink: #141416;
+  --glow: color-mix(in oklab, var(--accent) 16%, transparent);
+  --dot: rgb(255 255 255 / 0.07);
+  --shadow-pop: 0 0 0 1px var(--line), 0 18px 40px -16px rgb(0 0 0 / 0.7);
+  --font: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "Geist Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --drawer-w: 0px;
+  color-scheme: dark;
+}
+
+:root[data-theme="light"] {
+  --bg: #f1f1ee;
+  --bg-2: #e9e9e5;
+  --panel: #fbfbfa;
+  --raise: #ffffff;
+  --ink: #141416;
+  --ink-2: rgb(20 20 22 / 0.64);
+  --ink-3: rgb(20 20 22 / 0.42);
+  --line: rgb(20 20 22 / 0.09);
+  --line-2: rgb(20 20 22 / 0.16);
+  --glow: color-mix(in oklab, var(--accent) 22%, transparent);
+  --dot: rgb(20 20 22 / 0.08);
+  --shadow-pop: 0 0 0 1px var(--line), 0 18px 40px -18px rgb(20 20 22 / 0.35);
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --bg: #f1f1ee;
+    --bg-2: #e9e9e5;
+    --panel: #fbfbfa;
+    --raise: #ffffff;
+    --ink: #141416;
+    --ink-2: rgb(20 20 22 / 0.64);
+    --ink-3: rgb(20 20 22 / 0.42);
+    --line: rgb(20 20 22 / 0.09);
+    --line-2: rgb(20 20 22 / 0.16);
+    --glow: color-mix(in oklab, var(--accent) 22%, transparent);
+    --dot: rgb(20 20 22 / 0.08);
+    --shadow-pop: 0 0 0 1px var(--line), 0 18px 40px -18px rgb(20 20 22 / 0.35);
+    color-scheme: light;
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  max-width: 100%;
+  overflow-x: clip;
+  background: var(--bg);
+  color: var(--ink);
+}
+
+body {
+  font: 400 14px/1.5 var(--font);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+a {
+  color: inherit;
+}
+
+.mono {
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+[data-lucide],
+.lucide {
+  width: 16px;
+  height: 16px;
+  flex: none;
+}
+
+/* ------------------------------------------------------------------ announcement */
+.announce {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 38px;
+  padding: 4px max(16px, env(safe-area-inset-right)) 4px max(16px, env(safe-area-inset-left));
+  border-bottom: 1px solid var(--line);
+  background: var(--bg-2);
+  font-size: 13px;
+  color: var(--ink-2);
+}
+
+.announce p {
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+  text-align: center;
+}
+
+.announce a {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--ink);
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.announce a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.announce-mark {
+  width: 14px;
+  height: 14px;
+  border-radius: 4px;
+  background: linear-gradient(var(--accent) 0 46%, transparent 46% 58%, var(--ink) 58%);
+}
+
+/* ------------------------------------------------------------------ top bar */
+.topbar {
+  position: relative;
+  z-index: 20;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  height: 64px;
+  padding: 0 max(20px, env(safe-area-inset-right)) 0 max(20px, env(safe-area-inset-left));
+  border-bottom: 1px solid var(--line);
+  background: var(--bg);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  height: 64px;
+  color: var(--ink);
+  justify-self: start;
+}
+
+.brand svg {
+  height: 24px;
+  width: auto;
+  --kerf-logo-accent: var(--accent);
+}
+
+.pillnav {
+  display: flex;
+  gap: 2px;
+  padding: 3px;
+  border-radius: 12px;
+  background: var(--bg-2);
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+
+.pillnav a {
+  display: grid;
+  place-items: center;
+  height: 32px;
+  padding: 0 16px;
+  border-radius: 9px;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--ink-2);
+  text-decoration: none;
+  transition: color 0.15s, background-color 0.15s;
+}
+
+.pillnav a:hover {
+  color: var(--ink);
+}
+
+.pillnav a[aria-current="page"] {
+  color: var(--ink);
+  background: var(--raise);
+  box-shadow: 0 0 0 1px var(--line-2), 0 1px 2px rgb(0 0 0 / 0.25);
+}
+
+.topbar-end {
+  justify-self: end;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.icon-btn {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: var(--ink-2);
+  cursor: pointer;
+  transition: color 0.15s, background-color 0.15s;
+}
+
+.icon-btn:hover,
+.icon-btn[aria-expanded="true"] {
+  color: var(--ink);
+  background: var(--raise);
+}
+
+.icon-btn--sm {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+}
+
+.icon-btn [data-lucide],
+.icon-btn .lucide {
+  width: 18px;
+  height: 18px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 36px;
+  padding: 0 14px 0 12px;
+  border: 0;
+  border-radius: 10px;
+  font: 500 13.5px/1 var(--font);
+  color: var(--ink);
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.15s, box-shadow 0.15s, color 0.15s, scale 0.12s;
+}
+
+.btn:active {
+  scale: 0.98;
+}
+
+.btn--quiet {
+  background: var(--raise);
+  box-shadow: 0 0 0 1px var(--line-2);
+}
+
+.btn--quiet:hover {
+  box-shadow: 0 0 0 1px var(--ink-3);
+}
+
+.btn--quiet[aria-expanded="true"] {
+  background: var(--accent);
+  color: var(--accent-ink);
+  box-shadow: none;
+}
+
+.btn--accent {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+.btn--ghost {
+  background: transparent;
+  color: var(--ink-2);
+  box-shadow: 0 0 0 1px var(--line-2);
+}
+
+.btn--ghost:hover {
+  color: var(--ink);
+}
+
+/* shortcuts card */
+.pop-wrap {
+  position: relative;
+}
+
+.pop {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: -60px;
+  width: 280px;
+  padding: 14px 16px 10px;
+  border-radius: 16px;
+  background: var(--panel);
+  box-shadow: var(--shadow-pop);
+  transform-origin: 70% 0;
+  animation: pop-in 0.18s var(--ease);
+}
+
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    scale: 0.96;
+  }
+}
+
+.pop-title {
+  margin: 0 0 8px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ink-3);
+}
+
+.pop dl {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0 16px;
+  margin: 0;
+  font-size: 13px;
+}
+
+.pop dt,
+.pop dd {
+  margin: 0;
+  padding: 6px 0;
+  border-top: 1px solid var(--line);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.pop dt:first-of-type,
+.pop dt:first-of-type + dd {
+  border-top: 0;
+}
+
+.pop dd {
+  color: var(--ink-2);
+}
+
+.pop dt span {
+  color: var(--ink-3);
+  font-size: 11.5px;
+  padding: 0 2px;
+}
+
+kbd {
+  display: inline-grid;
+  place-items: center;
+  min-width: 22px;
+  height: 22px;
+  padding: 0 6px;
+  border-radius: 6px;
+  background: var(--raise);
+  box-shadow: inset 0 0 0 1px var(--line-2), 0 1px 0 var(--line-2);
+  font: 500 11.5px/1 var(--mono);
+  color: var(--ink);
+}
+
+/* ------------------------------------------------------------------ the app: stage + drawer */
+/* One screen tall: announcement, bar and footer take what they need, the app takes the rest. */
+.site--player {
+  display: flex;
+  flex-direction: column;
+  height: 100dvh;
+  overflow: hidden;
+}
+
+.site--player > .announce,
+.site--player > .topbar,
+.site--player > .foot {
+  flex: none;
+}
+
+.site--player > .app {
+  flex: 1 1 auto;
+  min-height: 0;
+}
+
+.app {
+  --drawer-w: 0px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) var(--drawer-w);
+  grid-template-rows: minmax(0, 1fr);
+  min-height: 0;
+  min-width: 0;
+  overflow: hidden;
+  transition: grid-template-columns 0.46s var(--ease);
+}
+
+.app[data-drawer="open"] {
+  --drawer-w: 384px;
+  grid-template-columns: minmax(0, 1fr) 384px;
+}
+
+.app:not([data-drawer="open"]) {
+  grid-template-columns: minmax(0, 1fr) 0px;
+}
+
+.stage {
+  /* Before the script measures, the player already has its desktop size: no jump on load. */
+  --player-w: min(calc(100vw - 96px), calc((100dvh - 250px) * 16 / 9));
+  position: relative;
+  isolation: isolate;
+  min-height: 0;
+  min-width: 0;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  padding: 24px 0;
+}
+
+.stage-glow {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(42% 38% at 50% 46%, var(--glow), transparent 70%),
+    radial-gradient(60% 50% at 50% 100%, color-mix(in oklab, var(--accent) 6%, transparent), transparent 70%);
+  transition: background 0.4s;
+}
+
+.stage-grid {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background-image: radial-gradient(var(--dot) 1px, transparent 1.2px);
+  background-size: 22px 22px;
+  mask-image: radial-gradient(70% 70% at 50% 45%, #000 30%, transparent 85%);
+}
+
+.stage-center {
+  display: grid;
+  justify-items: center;
+  gap: 22px;
+  width: 100%;
+  min-width: 0;
+}
+
+.device {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  width: max(var(--viewport-w, 0px), var(--player-w));
+  padding: 0;
+}
+
+/* Tablet and phone: a dashed guide shows the viewport the player sits in. */
+.device:not([data-device="desktop"]) {
+  padding: 34px 0 28px;
+  border-radius: 28px;
+  background:
+    linear-gradient(var(--bg), var(--bg)) padding-box,
+    repeating-linear-gradient(90deg, var(--line-2) 0 6px, transparent 6px 11px) border-box;
+  border: 1px dashed var(--line-2);
+}
+
+.device-label {
+  position: absolute;
+  top: -11px;
+  left: 50%;
+  translate: -50% 0;
+  display: none;
+  align-items: center;
+  gap: 8px;
+  height: 22px;
+  margin: 0;
+  padding: 0 10px;
+  border-radius: 999px;
+  background: var(--bg);
+  box-shadow: inset 0 0 0 1px var(--line-2);
+  font-size: 12px;
+  color: var(--ink-2);
+  white-space: nowrap;
+}
+
+.device-label .mono {
+  color: var(--ink-3);
+  font-size: 11.5px;
+}
+
+.device:not([data-device="desktop"]) .device-label {
+  display: inline-flex;
+}
+
+.device-label [data-lucide],
+.device-label .lucide {
+  width: 14px;
+  height: 14px;
+}
+
+.player-slot {
+  width: var(--player-w);
+}
+
+.is-ready .device {
+  transition: width 0.3s var(--ease), padding 0.3s var(--ease);
+}
+
+.player-slot video-player,
+.player-slot media-i18n {
+  display: block;
+  width: 100%;
+}
+
+.player-slot .kerf {
+  width: 100%;
+  aspect-ratio: auto;
+}
+
+.player-slot .kerf mux-video,
+.player-slot .kerf video {
+  display: block;
+  width: 100%;
+  aspect-ratio: var(--ratio);
+}
+
+.filmbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  min-height: 36px;
+  width: var(--player-w);
+  max-width: calc(100% - 32px);
+  min-width: 0;
+  flex-wrap: wrap;
+}
+
+.film-meta {
+  display: grid;
+  gap: 2px;
+}
+
+.film-meta b {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.film-meta span {
+  font-size: 12.5px;
+  color: var(--ink-3);
+}
+
+.chapters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  min-width: 0;
+}
+
+/* Under a narrow player the film bar stays one line: the chapters scroll sideways. */
+.stage[data-narrow] .filmbar {
+  flex-wrap: nowrap;
+}
+
+.stage[data-narrow] .film-meta {
+  display: none;
+}
+
+.stage[data-narrow] .chapters {
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scrollbar-width: none;
+  mask-image: linear-gradient(90deg, #000 80%, transparent);
+}
+
+.chapters button {
+  flex: none;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 32px;
+  padding: 0 10px;
+  border: 0;
+  border-radius: 10px;
+  background: var(--raise);
+  box-shadow: 0 0 0 1px var(--line);
+  font: 500 12.5px/1 var(--font);
+  color: var(--ink-2);
+  cursor: pointer;
+  transition: color 0.15s, box-shadow 0.15s;
+}
+
+.chapters button:hover {
+  color: var(--ink);
+  box-shadow: 0 0 0 1px var(--line-2);
+}
+
+.chapters button[data-current] {
+  color: var(--ink);
+  box-shadow: 0 0 0 1px var(--accent);
+}
+
+.chapters .mono {
+  font-size: 11px;
+  color: var(--ink-3);
+}
+
+.chapters button[data-current] .mono:first-child {
+  color: var(--accent);
+}
+
+:root[data-theme="light"] .chapters button[data-current] .mono:first-child {
+  color: var(--ink);
+}
+
+/* ------------------------------------------------------------------ the drawer */
+.drawer {
+  position: relative;
+  min-width: 0;
+  overflow: hidden;
+  border-left: 1px solid var(--line);
+  background: var(--panel);
+}
+
+.app:not([data-drawer="open"]) .drawer {
+  border-left-width: 0;
+}
+
+.drawer-in {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 384px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 18px 20px 28px;
+  display: grid;
+  align-content: start;
+  gap: 6px;
+  scrollbar-width: thin;
+  transition: opacity 0.3s, translate 0.46s var(--ease);
+}
+
+.app:not([data-drawer="open"]) .drawer-in {
+  opacity: 0;
+  translate: 24px 0;
+}
+
+.drawer-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  padding-bottom: 10px;
+}
+
+.drawer-head h2 {
+  margin: 4px 0 2px;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.drawer-head p {
+  margin: 0;
+  font-size: 13px;
+  color: var(--ink-3);
+}
+
+.group {
+  margin: 0;
+  padding: 16px 0 14px;
+  border: 0;
+  border-top: 1px solid var(--line);
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+}
+
+.group legend {
+  float: left;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 0;
+  margin-bottom: 10px;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--ink-2);
+}
+
+.group legend + * {
+  clear: both;
+}
+
+.hint {
+  font-size: 11.5px;
+  color: var(--ink-3);
+}
+
+.note {
+  margin: 0;
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--ink-3);
+}
+
+/* segmented control */
+.seg {
+  display: grid;
+  gap: 2px;
+  padding: 3px;
+  border-radius: 12px;
+  background: var(--bg-2);
+  box-shadow: inset 0 0 0 1px var(--line);
+}
+
+.seg--2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.seg--3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.seg label {
+  position: relative;
+}
+
+.seg input,
+.swatches input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.seg span {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 34px;
+  padding: 0 8px;
+  border-radius: 9px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink-2);
+  cursor: pointer;
+  transition: color 0.15s, background-color 0.15s;
+  white-space: nowrap;
+}
+
+.seg span:hover {
+  color: var(--ink);
+}
+
+.seg input:checked + span {
+  color: var(--ink);
+  background: var(--raise);
+  box-shadow: 0 0 0 1px var(--line-2), 0 1px 2px rgb(0 0 0 / 0.2);
+}
+
+.seg input:focus-visible + span {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.seg [data-lucide],
+.seg .lucide {
+  width: 15px;
+  height: 15px;
+}
+
+/* swatches */
+.swatches {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.swatches label {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+.swatches span {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  aspect-ratio: 1.3;
+  border-radius: 12px;
+  background: var(--sw);
+  box-shadow: inset 0 0 0 1px rgb(0 0 0 / 0.12);
+  color: transparent;
+  transition: box-shadow 0.15s, scale 0.12s;
+}
+
+.swatches input:checked + span,
+.swatches label.is-on span {
+  box-shadow: inset 0 0 0 1px rgb(0 0 0 / 0.12), 0 0 0 2px var(--panel), 0 0 0 4px var(--sw);
+}
+
+.swatches input:checked + span {
+  color: color-mix(in oklab, var(--sw) 10%, #141416);
+}
+
+.swatches input:focus-visible + span {
+  outline: 2px solid var(--ink);
+  outline-offset: 5px;
+}
+
+.swatches b {
+  font-size: 11.5px;
+  font-weight: 500;
+  color: var(--ink-3);
+}
+
+.swatch-custom input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: calc(100% - 20px);
+  opacity: 0;
+  cursor: pointer;
+}
+
+.swatch-custom span {
+  background: conic-gradient(from 210deg, #f2552c, #f5c542, #d4f53c, #2ec4a5, #3155ff, #8b7cff, #f2552c);
+}
+
+.swatch-custom.is-on span {
+  background: var(--sw);
+}
+
+/* range: the thumb is Kerf's blade */
+.range {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 28px;
+  margin: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.range::-webkit-slider-runnable-track {
+  height: 6px;
+  border-radius: 3px;
+  background: linear-gradient(90deg, var(--accent) 0 var(--pct, 50%), var(--line-2) var(--pct, 50%));
+}
+
+.range::-moz-range-track {
+  height: 6px;
+  border-radius: 3px;
+  background: var(--line-2);
+}
+
+.range::-moz-range-progress {
+  height: 6px;
+  border-radius: 3px;
+  background: var(--accent);
+}
+
+.range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 4px;
+  height: 22px;
+  margin-top: -8px;
+  border-radius: 2px;
+  background: var(--ink);
+  box-shadow: 0 0 0 3px var(--panel);
+}
+
+.range::-moz-range-thumb {
+  width: 4px;
+  height: 22px;
+  border: 0;
+  border-radius: 2px;
+  background: var(--ink);
+  box-shadow: 0 0 0 3px var(--panel);
+}
+
+.range:focus-visible {
+  outline: none;
+}
+
+.range:focus-visible::-webkit-slider-thumb {
+  box-shadow: 0 0 0 3px var(--panel), 0 0 0 5px var(--accent);
+}
+
+/* switches */
+.switch {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 36px;
+  font-size: 13.5px;
+  cursor: pointer;
+}
+
+.switch input {
+  position: absolute;
+  opacity: 0;
+}
+
+.switch-ui {
+  position: relative;
+  width: 36px;
+  height: 22px;
+  flex: none;
+  border-radius: 999px;
+  background: var(--line-2);
+  transition: background-color 0.2s;
+}
+
+.switch-ui::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--ink);
+  transition: translate 0.2s var(--ease);
+}
+
+.switch input:checked + .switch-ui {
+  background: var(--accent);
+}
+
+.switch input:checked + .switch-ui::after {
+  translate: 14px 0;
+  background: var(--accent-ink);
+}
+
+.switch input:focus-visible + .switch-ui {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* code */
+.code {
+  margin: 0;
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: var(--bg);
+  box-shadow: inset 0 0 0 1px var(--line);
+  overflow-x: auto;
+  font: 400 12px/1.65 var(--mono);
+  color: var(--ink-2);
+  tab-size: 2;
+}
+
+.t-c {
+  color: var(--ink-3);
+}
+
+.t-s {
+  color: var(--ink);
+}
+
+.t-p {
+  color: color-mix(in oklab, var(--accent) 70%, var(--ink));
+}
+
+:root[data-theme="light"] .t-p {
+  color: color-mix(in oklab, var(--accent) 45%, var(--ink));
+}
+
+.t-v {
+  color: var(--ink);
+}
+
+.code-actions {
+  display: flex;
+  gap: 8px;
+}
+
+/* ------------------------------------------------------------------ footer */
+.foot {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  min-height: 56px;
+  padding: 10px max(20px, env(safe-area-inset-right)) calc(10px + env(safe-area-inset-bottom)) max(20px, env(safe-area-inset-left));
+  border-top: 1px solid var(--line);
+  font-size: 12.5px;
+  color: var(--ink-3);
+}
+
+.foot-brand {
+  display: inline-flex;
+  color: var(--ink-2);
+}
+
+.foot-brand svg {
+  height: 16px;
+  width: auto;
+  --kerf-logo-accent: var(--ink-2);
+}
+
+.foot-line {
+  margin: 0;
+}
+
+.foot-line a {
+  color: var(--ink-2);
+  text-decoration: underline;
+  text-decoration-color: var(--line-2);
+  text-underline-offset: 3px;
+  transition: color 0.15s, text-decoration-color 0.15s;
+}
+
+.foot-line a:hover {
+  color: var(--ink);
+  text-decoration-color: currentColor;
+}
+
+:root[data-announce="hidden"] .announce {
+  display: none;
+}
+
+.powered {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: 32px;
+  padding: 0 12px;
+  border-radius: 10px;
+  box-shadow: inset 0 0 0 1px var(--line);
+  color: var(--ink-3);
+  text-decoration: none;
+  transition: color 0.15s, box-shadow 0.15s;
+}
+
+.powered:hover {
+  color: var(--ink);
+  box-shadow: inset 0 0 0 1px var(--line-2);
+}
+
+.vjs-logo {
+  --color-accent: #ff6200;
+  display: inline-flex;
+  height: 14px;
+  color: var(--ink);
+}
+
+.vjs-logo svg {
+  height: 14px;
+  width: 79px;
+}
+
+/* ------------------------------------------------------------------ narrow screens: the drawer becomes a bottom panel that pushes the stage up */
+@media (max-width: 860px) {
+  .topbar {
+    grid-template-columns: auto 1fr auto;
+    gap: 10px;
+    padding-inline: 12px;
+  }
+
+  .pillnav {
+    justify-self: center;
+  }
+
+  .pillnav a {
+    padding: 0 12px;
+  }
+
+  .btn--quiet span {
+    display: none;
+  }
+
+  .btn--quiet {
+    width: 36px;
+    padding: 0;
+    justify-content: center;
+  }
+
+  .topbar-end .pop-wrap {
+    display: none;
+  }
+
+  .brand svg {
+    height: 22px;
+  }
+
+  .app,
+  .app[data-drawer="open"],
+  .app:not([data-drawer="open"]) {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: minmax(0, 1fr) auto;
+  }
+
+  .stage {
+    min-height: 0;
+    padding: 18px 0 14px;
+  }
+
+  .drawer {
+    border-left: 0;
+    border-top: 1px solid var(--line);
+    height: 0;
+    transition: height 0.46s var(--ease);
+  }
+
+  .app[data-drawer="open"] .drawer {
+    height: min(52dvh, 520px);
+  }
+
+  .drawer-in {
+    position: absolute;
+    inset: 0;
+    width: auto;
+  }
+
+  .foot {
+    flex-wrap: wrap;
+    gap: 8px 16px;
+  }
+
+  .site--player .foot-line {
+    display: none;
+  }
+
+  /* On a phone the player is the page: no chapter row under it, no device guides, no size switch. */
+  .filmbar,
+  .device-label,
+  .group--size {
+    display: none !important;
+  }
+
+  .device:not([data-device="desktop"]) {
+    padding: 0;
+    border: 0;
+    background: none;
+  }
+
+  .stage-glow {
+    background: radial-gradient(70% 50% at 50% 50%, var(--glow), transparent 75%);
+  }
+
+  .foot-line {
+    order: 3;
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .brand svg {
+    height: 20px;
+  }
+
+  .announce {
+    font-size: 12px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0s !important;
+    animation-duration: 0s !important;
+  }
+}

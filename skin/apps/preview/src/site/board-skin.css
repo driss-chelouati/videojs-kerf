@@ -1,0 +1,261 @@
+/* Kerf skin, board version. The radius system: outer 20, frame 6, inner 14.
+   Everything that opens rises out of the frame from the control that asked for it. */
+
+.kd {
+  container-type: inline-size;
+  --k-tile: 76px; --k-tile-icon: 30px; --k-tile-r: var(--k-r); --k-tile-gap: 6px; --k-tile-frame: #ffffff;
+  --k-accent: var(--media-accent-color, #d4f53c);
+  --k-accent-ink: var(--media-accent-text-color, #141416);
+  --k-r: var(--media-border-radius, 20px);
+  --k-pad: 6px;
+  --k-ri: calc(var(--k-r) - var(--k-pad));
+  --k-btn: 44px;
+  --k-gap: 6px;
+  --k-band: calc(var(--k-btn) + var(--k-gap));
+  --k-f: 10px;
+  --k-surface: #141416;
+  --k-ink: #f5f5f3;
+  --k-ink2: rgb(245 245 243 / 0.62);
+  --k-track: rgb(255 255 255 / 0.14);
+  --k-buffer: rgb(255 255 255 / 0.28);
+  --k-hover: rgb(255 255 255 / 0.08);
+  --k-edge: rgb(255 255 255 / 0.07);
+  container-type: inline-size;
+  position: relative;
+  box-sizing: border-box;
+  padding: var(--k-pad);
+  border-radius: var(--k-r);
+  background: var(--k-surface);
+  color: var(--k-ink);
+  font-family: var(--media-font-family, inherit);
+  box-shadow:
+    inset 0 0 0 1px var(--k-edge),
+    0 1px 2px rgb(14 14 18 / 0.14),
+    0 10px 24px -12px rgb(14 14 18 / 0.28),
+    0 40px 80px -48px rgb(14 14 18 / 0.45);
+}
+.kd[data-theme="light"] {
+  --k-tile-frame: #141416;
+  --k-surface: #fdfdfc;
+  --k-ink: #141416;
+  --k-ink2: rgb(20 20 22 / 0.6);
+  --k-track: rgb(20 20 22 / 0.1);
+  --k-buffer: rgb(20 20 22 / 0.2);
+  --k-hover: rgb(20 20 22 / 0.05);
+  --k-edge: rgb(20 20 22 / 0.07);
+  --k-accent-ink: #fff;
+}
+.kd[data-fs] { --k-pad: 0px; --k-r: 0px; --k-ri: 14px; box-shadow: none; }
+.kd *, .kd *::before, .kd *::after { box-sizing: border-box; }
+.kd svg { display: block; width: 20px; height: 20px; }
+
+.k-win {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--k-ri);
+  background: #000;
+  isolation: isolate;
+}
+.kd[data-fs] .k-win { border-radius: 0; }
+.k-media { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+/* ---------- fillets: the concave curves where a notch meets the picture ---------- */
+.fl { position: absolute; width: var(--k-f); height: var(--k-f); pointer-events: none; }
+.fl.bl { right: 100%; bottom: 0; background: radial-gradient(circle at 0 0, transparent calc(var(--k-f) - .5px), var(--k-surface) var(--k-f)); }
+.fl.br { left: 100%; bottom: 0; background: radial-gradient(circle at 100% 0, transparent calc(var(--k-f) - .5px), var(--k-surface) var(--k-f)); }
+.fl.tl { right: 100%; top: 0; background: radial-gradient(circle at 0 100%, transparent calc(var(--k-f) - .5px), var(--k-surface) var(--k-f)); }
+.fl.tr { left: 100%; top: 0; background: radial-gradient(circle at 100% 100%, transparent calc(var(--k-f) - .5px), var(--k-surface) var(--k-f)); }
+/* the picture's own corner, re-drawn above a notch that is flush with the frame */
+.vc { position: absolute; bottom: 100%; width: var(--k-ri); height: var(--k-ri); pointer-events: none; }
+.vc.l { left: 0; background: radial-gradient(circle at 100% 0, transparent calc(var(--k-ri) - .5px), var(--k-surface) var(--k-ri)); }
+.vc.r { right: 0; background: radial-gradient(circle at 0 0, transparent calc(var(--k-ri) - .5px), var(--k-surface) var(--k-ri)); }
+
+/* ---------- controls ---------- */
+.k-controls { position: absolute; inset: 0; pointer-events: none; z-index: 3; }
+.k-controls > * { pointer-events: auto; }
+.k-controls[data-hidden] .k-bar { transform: translateY(calc(100% + 4px)); }
+.k-controls[data-hidden] .k-timetab { transform: translateY(calc(100% + var(--k-band) + 4px)); }
+
+.k-bar {
+  position: absolute; left: 0; right: 0; bottom: 0;
+  height: var(--k-band);
+  padding-top: var(--k-gap);
+  display: flex; align-items: center; gap: 2px;
+  background: var(--k-surface);
+}
+.k-bar .vc { bottom: 100%; }
+
+.k-btn {
+  flex: none;
+  position: relative;
+  display: grid; place-items: center;
+  width: var(--k-btn); height: var(--k-btn);
+  border: 0; padding: 0; margin: 0;
+  border-radius: var(--k-ri);
+  background: transparent;
+  color: var(--k-ink);
+  cursor: pointer;
+}
+.k-btn.hov { background: var(--k-hover); }
+.k-btn.play.hov { background: var(--k-accent); color: var(--k-accent-ink); }
+.k-btn.play svg { transform: translateX(0.66px); }
+.k-btn.on::after { content: ""; position: absolute; left: 50%; bottom: 7px; width: 12px; height: 2px; margin-left: -6px; border-radius: 2px; background: var(--k-accent); }
+.k-btn.focus { box-shadow: inset 0 0 0 2px var(--k-ink), inset 0 0 0 4px var(--k-surface); background: var(--k-hover); }
+.k-btn.dis { color: var(--k-ink2); opacity: .5; }
+.k-btn .badge { position: absolute; top: 8px; right: 6px; min-width: 15px; height: 11px; padding: 0 2px; border-radius: 3px; background: var(--k-ink); color: var(--k-surface); font: 700 7.5px/11px var(--k-mono, ui-monospace, monospace); letter-spacing: .02em; }
+
+/* time tab: flush with the left of the frame, rises one step above the band */
+.k-timetab {
+  position: absolute; left: 0; bottom: calc(var(--k-band) - 1px);
+  height: 31px; padding: 1px 12px 0 14px;
+  display: flex; align-items: center; gap: 5px;
+  background: var(--k-surface);
+  border-top-right-radius: var(--k-f);
+  font-size: 13px; line-height: 1; font-weight: 500; letter-spacing: .005em;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.k-timetab .of { color: var(--k-ink2); }
+.k-timetab .fl.br { bottom: 1px; }
+
+/* ---------- seek: chapters are kerfs cut through the track ---------- */
+.k-seek { position: relative; flex: 1; min-width: 0; height: var(--k-btn); margin: 0 12px; display: flex; align-items: center; }
+.k-track { position: relative; display: flex; gap: 3px; width: 100%; height: 6px; transition: height .15s; }
+.k-seek.pointing .k-track { height: 8px; }
+.k-ch { position: relative; height: 100%; border-radius: 3px; overflow: hidden; background: var(--k-track); }
+.k-ch:first-child { border-radius: 4px 2px 2px 4px; }
+.k-ch:last-child { border-radius: 2px 4px 4px 2px; }
+.k-ch:not(:first-child):not(:last-child) { border-radius: 2px; }
+.k-ch i { position: absolute; left: 0; top: 0; bottom: 0; }
+.k-ch .buf { background: var(--k-buffer); }
+.k-ch .ptr { background: var(--k-buffer); }
+.k-ch .fill { background: var(--k-accent); }
+.k-ch.hl { background: color-mix(in oklab, var(--k-track), var(--k-ink) 10%); }
+.k-thumb {
+  position: absolute; top: 50%; width: 4px; height: 20px; margin: -10px 0 0 -2px;
+  border-radius: 2px; background: var(--k-ink);
+  box-shadow: 0 0 0 3px var(--k-surface);
+}
+.k-thumb.focus { box-shadow: 0 0 0 3px var(--k-surface), 0 0 0 5px var(--k-ink); }
+.k-hair { position: absolute; top: 50%; width: 2px; height: 14px; margin: -7px 0 0 -1px; border-radius: 1px; background: var(--k-ink2); }
+
+/* ---------- tabs that rise out of the band ---------- */
+.k-tab {
+  position: absolute; bottom: calc(var(--k-band) - 1px);
+  background: var(--k-surface);
+  border-radius: var(--k-ri) var(--k-ri) 0 0;
+  transform-origin: 50% 100%;
+}
+.k-tab .fl.bl, .k-tab .fl.br { bottom: 1px; }
+
+.k-preview { padding: 6px 6px 7px; }
+.k-preview img { display: block; border-radius: 8px; object-fit: cover; }
+.k-preview .meta { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; padding: 8px 4px 2px; font-size: 12.5px; line-height: 16px; white-space: nowrap; }
+.k-preview .meta b { font-weight: 500; }
+.k-preview .meta span { color: var(--k-ink2); font-variant-numeric: tabular-nums; }
+
+.k-tip { height: 32px; padding: 1px 10px 0 12px; display: flex; align-items: center; gap: 8px; border-radius: var(--k-f) var(--k-f) 0 0; font-size: 12.5px; font-weight: 500; white-space: nowrap; }
+.k-tip kbd { display: grid; place-items: center; min-width: 18px; height: 18px; padding: 0 5px; border-radius: 5px; background: var(--k-hover); box-shadow: inset 0 0 0 1px var(--k-edge); font: 500 11px/1 inherit; color: var(--k-ink2); }
+
+.k-vol { width: calc(var(--k-btn) + 12px); padding: 12px 6px 8px; display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.k-vol .pct { font-size: 12px; font-weight: 500; font-variant-numeric: tabular-nums; }
+.k-vol .vt { position: relative; width: 6px; height: 104px; border-radius: 3px; background: var(--k-track); }
+.k-vol .vt i { position: absolute; left: 0; right: 0; bottom: 0; border-radius: 3px; background: var(--k-accent); }
+.k-vol .vt b { position: absolute; left: 50%; width: 20px; height: 4px; margin: 0 0 -2px -10px; border-radius: 2px; background: var(--k-ink); box-shadow: 0 0 0 3px var(--k-surface); }
+
+.k-menu { right: 0; width: 248px; padding: 6px 6px 4px; border-top-right-radius: 0; transform-origin: 100% 100%; }
+.k-menu .vc.r { bottom: 100%; }
+.k-menu .mh { display: flex; align-items: center; gap: 8px; height: 40px; padding: 0 12px 0 8px; font-size: 13px; font-weight: 600; }
+.k-menu .mh svg { width: 16px; height: 16px; transform: rotate(180deg); color: var(--k-ink2); }
+.k-menu .sep { height: 1px; margin: 2px 8px 4px; background: var(--k-edge); }
+.k-mi { display: flex; align-items: center; gap: 10px; height: 40px; padding: 0 10px 0 12px; border-radius: var(--k-ri); font-size: 13.5px; font-weight: 500; }
+.k-mi .ic { width: 18px; height: 18px; color: var(--k-ink2); }
+.k-mi .ic svg { width: 18px; height: 18px; }
+.k-mi .hint { margin-left: auto; color: var(--k-ink2); font-weight: 400; font-variant-numeric: tabular-nums; }
+.k-mi .chev { width: 14px; height: 14px; color: var(--k-ink2); }
+.k-mi .chev svg { width: 14px; height: 14px; }
+.k-mi.hl { background: var(--k-hover); }
+.k-mi.kb { box-shadow: inset 0 0 0 2px var(--k-ink); }
+.k-mi .chk { margin-left: auto; width: 18px; height: 18px; color: var(--k-accent); }
+.k-mi .chk svg { width: 18px; height: 18px; }
+.kd[data-theme="light"] .k-mi .chk { color: var(--k-ink); }
+/* speed: six rates as a 3 x 2 grid of chips, so the menu stays short on small players */
+.k-rates { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 4px; padding: 0 0 2px; }
+.k-rates span { display: grid; place-items: center; height: 40px; border-radius: var(--k-ri); background: var(--k-hover); font-size: 13.5px; font-weight: 500; font-variant-numeric: tabular-nums; }
+.k-rates span.sel { background: var(--k-accent); color: var(--k-accent-ink); }
+.k-rates span.kb { box-shadow: 0 0 0 2px var(--k-surface), 0 0 0 4px var(--k-ink); }
+
+.k-err { width: 340px; padding: 18px 18px 8px; border-radius: var(--k-r) var(--k-r) 0 0; }
+.k-err h4 { margin: 0 0 4px; font-size: 15px; line-height: 20px; font-weight: 600; letter-spacing: -.005em; }
+.k-err p { margin: 0 0 14px; font-size: 13px; line-height: 19px; color: var(--k-ink2); }
+.k-err .acts { display: flex; gap: 6px; }
+.k-err .acts span { display: grid; place-items: center; height: 40px; padding: 0 16px; border-radius: 12px; font-size: 13.5px; font-weight: 600; }
+.k-err .acts .pri { background: var(--k-accent); color: var(--k-accent-ink); }
+.k-err .acts .sec { background: var(--k-hover); }
+
+/* ---------- the status notch hangs from the top edge ---------- */
+.k-status {
+  position: absolute; top: 0; left: 50%; z-index: 4;
+  height: 38px; padding: 0 16px 0 12px;
+  display: flex; align-items: center; gap: 8px;
+  transform: translateX(-50%);
+  background: var(--k-surface);
+  border-radius: 0 0 var(--k-ri) var(--k-ri);
+  font-size: 13px; font-weight: 500; font-variant-numeric: tabular-nums; white-space: nowrap;
+}
+.k-status svg { width: 16px; height: 16px; }
+.k-status .of { color: var(--k-ink2); }
+
+/* ---------- centre tile: ready and loading ---------- */
+.k-big {
+  position: absolute; left: 50%; top: 50%; z-index: 2;
+  width: var(--k-tile); height: var(--k-tile); margin: calc(var(--k-tile) / -2) 0 0 calc(var(--k-tile) / -2);
+  display: grid; place-items: center;
+  border-radius: var(--k-tile-r);
+  background: var(--k-surface); color: var(--k-ink);
+}
+/* the tile sits inset in a thin frame, white on dark, ink on light, concentric with it (as in the live skin) */
+.k-big::before {
+  content: ""; position: absolute; inset: calc(var(--k-tile-gap) * -1);
+  border-radius: calc(var(--k-tile-r) + var(--k-tile-gap));
+  border: 2px solid var(--k-tile-frame);
+  box-shadow: 0 12px 32px -14px rgb(0 0 0 / .55);
+}
+.k-big svg { width: var(--k-tile-icon); height: var(--k-tile-icon); }
+.k-big.play svg { transform: translateX(1.1px); }
+.k-big.spin svg { width: calc(var(--k-tile-icon) - 4px); height: calc(var(--k-tile-icon) - 4px); color: var(--k-accent); }
+.kd[data-theme="light"] .k-big.spin svg { color: var(--k-ink); }
+
+/* ---------- captions sit on the frame colour, never on the picture ---------- */
+.k-cap { position: absolute; left: 0; right: 0; bottom: calc(var(--k-band) + 44px); z-index: 2; display: flex; justify-content: center; padding: 0 24px; pointer-events: none; }
+.k-cap span { max-width: 32em; padding: 5px 12px 6px; border-radius: 10px; background: var(--k-surface); color: var(--k-ink); font-size: 17px; line-height: 24px; font-weight: 500; text-align: center; letter-spacing: -.005em; }
+.k-controls[data-hidden] ~ .k-cap, .k-cap.low { bottom: 18px; }
+
+/* ---------- the rail: the frame keeps the progress when the controls sink ---------- */
+.k-rail { position: absolute; left: var(--k-r); right: var(--k-r); bottom: 2px; height: 2px; border-radius: 1px; background: var(--k-track); opacity: 0; }
+.k-rail i { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 1px; background: var(--k-accent); }
+.kd.hidden .k-rail { opacity: 1; }
+
+/* ---------- loading and error dim the picture a touch ---------- */
+.k-dim { position: absolute; inset: 0; z-index: 1; background: rgb(10 10 12 / .38); }
+
+/* ---------- narrow players ---------- */
+@container (max-width: 559px) {
+  .k-btn.cc { display: none; }
+  .k-seek { margin: 0 10px; }
+  .k-menu { width: min(248px, calc(100% - 24px)); }
+  .k-cap span { font-size: 15px; line-height: 21px; }
+  .k-err { width: calc(100% - 24px); }
+}
+
+@container (width < 800px) { .k-big { --k-tile: 64px; --k-tile-icon: 26px; --k-tile-r: max(8px, calc(var(--k-r) - 3px)); } }
+@container (width < 560px) { .k-big { --k-tile: 56px; --k-tile-icon: 22px; --k-tile-r: max(8px, calc(var(--k-r) - 6px)); --k-tile-gap: 5px; } }
+
+/* the drawings answer the pointer the way the live skin does */
+@media (hover: hover) {
+  .kd .k-btn:hover { background: var(--k-hover); }
+  .kd .k-btn.play:hover { background: var(--k-accent); color: var(--k-accent-ink); }
+  .kd .k-big.play:hover { background: var(--k-accent); color: var(--k-accent-ink); }
+  .kd .k-mi:hover { background: var(--k-hover); }
+}
+.kd .k-btn, .kd .k-big, .kd .k-mi { transition: background-color .12s, color .12s; }

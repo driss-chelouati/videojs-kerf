@@ -2,11 +2,115 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Kerf - Video.js</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Kerf, a Video.js 10 skin</title>
+    <meta name="description" content="Kerf is a Video.js 10 player skin built on one cut: the picture makes room for the controls, so they always sit on solid ground." />
+    <meta name="theme-color" content="#0b0b0c" />
+    <link rel="icon" href="./brand/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" />
+    <link rel="preconnect" href="https://stream.mux.com" />
+    <link rel="preconnect" href="https://image.mux.com" />
+    <link rel="stylesheet" href="/src/site/site.css" />
+    <!--kerf:head-->
+    <style>@view-transition { navigation: auto; }</style>
   </head>
-  <body class="text-foreground h-screen overflow-hidden font-sans">
-    <div id="root" class="h-full"></div>
-    <script type="module" src="/src/shell/main.tsx"></script>
+  <body class="site site--player">
+    <!--kerf:top:player-->
+
+    <main class="app" id="app">
+      <section class="stage" aria-label="The Kerf player">
+        <div class="stage-glow" aria-hidden="true"></div>
+        <div class="stage-grid" aria-hidden="true"></div>
+        <div class="stage-center">
+          <div class="device" id="device">
+            <p class="device-label" id="device-label"></p>
+            <div class="player-slot" id="player-slot"></div>
+          </div>
+          <div class="filmbar" id="filmbar">
+            <div class="film-meta">
+              <b>The Sparvek launch film</b>
+              <span>Orvio, 0:46, five chapters</span>
+            </div>
+            <ol class="chapters" id="chapters" aria-label="Chapters"></ol>
+          </div>
+        </div>
+      </section>
+
+      <aside class="drawer" id="drawer" aria-label="Customize the player" inert>
+        <form class="drawer-in" id="controls">
+          <header class="drawer-head">
+            <div>
+              <h2>Customize</h2>
+              <p>Every switch sets a property a host product can set.</p>
+            </div>
+            <button class="icon-btn" type="button" aria-label="Close" data-close><i data-lucide="x"></i></button>
+          </header>
+
+          <fieldset class="group group--size">
+            <legend>Player size</legend>
+            <div class="seg seg--3">
+              <label><input type="radio" name="size" value="desktop" checked /><span><i data-lucide="monitor"></i>Desktop</span></label>
+              <label><input type="radio" name="size" value="tablet" /><span><i data-lucide="tablet"></i>Tablet</span></label>
+              <label><input type="radio" name="size" value="phone" /><span><i data-lucide="smartphone"></i>Phone</span></label>
+            </div>
+          </fieldset>
+
+          <fieldset class="group">
+            <legend>Film</legend>
+            <div class="seg seg--2">
+              <label><input type="radio" name="film" value="169" checked /><span>16:9, from Mux</span></label>
+              <label><input type="radio" name="film" value="916" /><span>9:16 cut</span></label>
+            </div>
+          </fieldset>
+
+          <fieldset class="group">
+            <legend>Frame</legend>
+            <div class="seg seg--3">
+              <label><input type="radio" name="surface" value="dark" checked /><span><i data-lucide="moon"></i>Dark</span></label>
+              <label><input type="radio" name="surface" value="light" /><span><i data-lucide="sun"></i>Light</span></label>
+              <label><input type="radio" name="surface" value="auto" /><span><i data-lucide="sun-moon"></i>System</span></label>
+            </div>
+          </fieldset>
+
+          <fieldset class="group">
+            <legend>Accent <output class="hint mono" id="accent-out"></output></legend>
+            <div class="swatches">
+              <label style="--sw: #d4f53c"><input type="radio" name="accent" value="#d4f53c" checked /><span><i data-lucide="check"></i></span><b>Lime</b></label>
+              <label style="--sw: #3155ff"><input type="radio" name="accent" value="#3155ff" /><span><i data-lucide="check"></i></span><b>Cobalt</b></label>
+              <label style="--sw: #f2552c"><input type="radio" name="accent" value="#f2552c" /><span><i data-lucide="check"></i></span><b>Signal</b></label>
+              <label style="--sw: #8b7cff"><input type="radio" name="accent" value="#8b7cff" /><span><i data-lucide="check"></i></span><b>Iris</b></label>
+              <label class="swatch-custom" style="--sw: #ffffff"><input type="color" name="custom" value="#2ec4a5" aria-label="Custom accent" /><span></span><b>Custom</b></label>
+            </div>
+            <p class="note" id="accent-note" hidden>Lime is tuned for dark frames. On a light frame, pick a deeper accent so the seek fill holds 3:1.</p>
+          </fieldset>
+
+          <fieldset class="group">
+            <legend>Corner radius <output class="hint mono" id="radius-out">20 = 14 + 6</output></legend>
+            <input class="range" type="range" name="radius" min="8" max="32" step="2" value="20" aria-describedby="radius-help" />
+            <p class="note" id="radius-help">Outer radius = inner radius + frame. Drag it: every corner stays concentric.</p>
+          </fieldset>
+
+          <fieldset class="group">
+            <legend>Behaviour</legend>
+            <label class="switch"><input type="checkbox" name="motion" role="switch" /><span class="switch-ui"></span><span>Reduce motion</span></label>
+            <label class="switch"><input type="checkbox" name="captions" role="switch" /><span class="switch-ui"></span><span>Show captions</span></label>
+          </fieldset>
+
+          <fieldset class="group group--code">
+            <legend>Your Kerf</legend>
+            <pre class="code"><code id="code"></code></pre>
+            <div class="code-actions">
+              <button class="btn btn--accent" type="button" data-copy><i data-lucide="copy"></i><span>Copy</span></button>
+              <button class="btn btn--ghost" type="reset"><i data-lucide="rotate-ccw"></i><span>Reset</span></button>
+            </div>
+          </fieldset>
+        </form>
+      </aside>
+    </main>
+
+    <!--kerf:foot-->
+    <script type="module" src="/src/site/player-page.ts"></script>
   </body>
 </html>

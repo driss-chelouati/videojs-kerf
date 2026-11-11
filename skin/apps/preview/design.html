@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Kerf, design notes</title>
+    <meta name="description" content="How Kerf was designed: one cut, one radius system, everything rising from the frame." />
+    <meta name="theme-color" content="#0b0b0c" />
+    <link rel="icon" href="./brand/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap" />
+    <link rel="stylesheet" href="/src/site/site.css" />
+    <link rel="stylesheet" href="/src/site/board-skin.css" />
+    <link rel="stylesheet" href="/src/site/design.css" />
+    <!--kerf:head-->
+    <style>@view-transition { navigation: auto; }</style>
+  </head>
+  <body class="site site--design">
+    <!--kerf:top:design-->
+    <svg class="kerfline" aria-hidden="true" preserveAspectRatio="none" viewBox="0 0 40 1000"><path d="M20 0V240H8V520H32V780H14V1000" /></svg>
+
+    <main class="dz">
+      <!-- hero: the name, cut by the idea -->
+      <header class="dz-hero wrap">
+        <h1 class="cut" aria-label="Kerf">
+          <span class="cut-a" aria-hidden="true">Kerf</span>
+          <span class="cut-b" aria-hidden="true">Kerf</span>
+        </h1>
+        <div class="dz-hero-copy">
+          <p class="lede">A Video.js 10 skin built on one cut. <span>The picture makes room for the controls, so they always sit on solid ground, in your product's own colour.</span></p>
+          <div class="dz-hero-side">
+            <p class="def"><b>kerf</b>, noun. The slot a saw leaves in the material it cuts.</p>
+            <dl class="meta">
+              <dt>Player</dt><dd>Video.js 10.3, HTML and CSS</dd>
+              <dt>Film</dt><dd>Sparvek launch, 46 s, Mux</dd>
+              <dt>Customise</dt><dd class="mono">--media-accent-color<br />--media-border-radius</dd>
+              <dt>Licence</dt><dd>Apache 2.0</dd>
+            </dl>
+          </div>
+        </div>
+      </header>
+
+      <!-- exploded view, driven by scroll -->
+      <section class="explode" aria-labelledby="explode-h">
+        <div class="explode-sticky">
+          <div class="wrap explode-head">
+            <h2 id="explode-h">Three layers, one surface</h2>
+            <p>The picture at the bottom. The frame cut to make room. The notches that rise from it.</p>
+          </div>
+          <div class="explode-stage" aria-hidden="true">
+            <div class="layer layer-1" id="layer-1"><span class="layer-tag mono">01 Picture</span></div>
+            <div class="layer layer-2" id="layer-2"><span class="layer-tag mono">02 Frame and band</span></div>
+            <div class="layer layer-3" id="layer-3"><span class="layer-tag mono">03 Notches</span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- anatomy -->
+      <section class="sec wrap">
+        <div class="sh"><h2>Desktop, paused</h2><p>Over the brightest frame in the film.</p></div>
+        <div class="anat-grid">
+          <div class="spot" id="hero-player"></div>
+          <ol class="anat">
+            <li><span class="num">1</span><div><b>Frame</b>Six pixels of your product's surface around the picture. Outer radius 20, inner 14, so every corner is concentric.</div></li>
+            <li><span class="num">2</span><div><b>Time tab</b>A step of the frame, flush left. Current and total time in tabular numerals, so nothing jitters.</div></li>
+            <li><span class="num">3</span><div><b>Band</b>The controls' notch. A solid surface, so contrast never depends on what is playing.</div></li>
+            <li><span class="num">4</span><div><b>Chapter kerfs</b>The film's five scenes, cut into the seek track as 3 px gaps.</div></li>
+            <li><span class="num">5</span><div><b>Blade</b>The playhead is a 4 px blade with a 3 px cut around it. It reads on fill, buffer and track alike.</div></li>
+            <li><span class="num">6</span><div><b>Icons</b>The official Video.js solid set at 20 px, in 44 px targets on every screen size.</div></li>
+          </ol>
+        </div>
+      </section>
+
+      <section class="sec wrap">
+        <div class="sh"><h2>Everything rises from the frame</h2><p>Previews and menus grow out of the band, from the control that opened them.</p></div>
+        <div class="two">
+          <figure class="tilt"><div class="spot" id="scrub"></div><figcaption><b>Scrubbing.</b> The preview window carries the Mux storyboard frame and its chapter.</figcaption></figure>
+          <figure class="tilt"><div class="spot" id="menu"></div><figcaption><b>Settings.</b> Flush right, its corner square, the picture's corner redrawn above it.</figcaption></figure>
+        </div>
+      </section>
+
+      <section class="sec wrap">
+        <div class="sh"><h2>States</h2><p>Same frame, same radii, one accent. Drawn here; every one of them runs on the Player page.</p></div>
+        <div class="three" id="states"></div>
+      </section>
+
+      <section class="sec wrap">
+        <div class="sh"><h2>Phone</h2><p>The player decides by its own width, not the screen's. Targets stay 44 px.</p></div>
+        <div class="phones" id="phones"></div>
+      </section>
+
+      <section class="sec wrap">
+        <div class="sh"><h2>The numbers behind the cut</h2><p>One radius system, two speeds, no exceptions.</p></div>
+        <div class="sys">
+          <figure class="panel geo-panel">
+            <div class="geo" id="geo"></div>
+            <figcaption>Outer radius = inner radius + frame: <b class="mono">20 = 14 + 6</b>. The time tab's base fillet and its top corner share a 10 px radius, so the step reads as one cut.</figcaption>
+          </figure>
+          <div class="panel">
+            <h3>Motion</h3>
+            <div class="motion-demo" aria-hidden="true"><div class="md-tab"></div><div class="md-band"></div></div>
+            <dl class="rows">
+              <dt>Rise</dt><dd>200 ms, cubic-bezier(.2, .8, .2, 1), from 0.94 out of its trigger.</dd>
+              <dt>Sink</dt><dd>120 ms ease-in. Faster out than in.</dd>
+              <dt>Interrupted</dt><dd>Transitions, not keyframes: a menu closed mid-rise turns back from where it is.</dd>
+              <dt>Reduced</dt><dd>Every change is instant. Tabs still appear at their trigger.</dd>
+            </dl>
+          </div>
+          <div class="panel">
+            <h3>Access</h3>
+            <dl class="rows">
+              <dt>Contrast</dt><dd>Controls never sit on footage. Ink on frame 17:1 dark, 18:1 light.</dd>
+              <dt>Focus</dt><dd>2 px ink ring with a 2 px cut on every control, menu item and blade.</dd>
+              <dt>Keyboard</dt><dd>Space, arrows, J, L, M, F, C. Escape closes a menu and returns focus.</dd>
+              <dt>Transparency</dt><dd>Nothing to remove: every surface is already solid.</dd>
+              <dt>Forced colours</dt><dd>Canvas frame, CanvasText ink, Highlight fill and focus.</dd>
+              <dt>Languages</dt><dd>Labels from Video.js i18n. Right to left mirrors the notches.</dd>
+            </dl>
+          </div>
+        </div>
+      </section>
+
+      <section class="thinking wrap" aria-labelledby="thinking-h">
+        <h2 id="thinking-h">Design thinking</h2>
+        <div class="reveal-text">
+          <p>Most players float their controls over the picture, then fight the picture for contrast with gradients and blur. Kerf cuts the picture instead. The controls live in a notch of the player's own frame, a solid surface in the host product's colour, so they read the same over a white sky or a black night.</p>
+          <p>Everything that opens rises out of that frame from the control that asked for it, and sinks back when the film plays. Transient feedback hangs from the top edge. One radius system, one accent, the official solid icons, tabular time. Familiar to use, unmistakable to look at.</p>
+        </div>
+      </section>
+
+      <section class="closer wrap">
+        <div class="closer-card">
+          <p class="closer-k mono">Kerf on the Sparvek film</p>
+          <h2>See it cut.</h2>
+          <p>Scrub the chapters, open the menus, change the accent and the radius. Every switch is a property your product can set.</p>
+          <a class="btn btn--dark" href="./index.html"><span>Open the player</span><i data-lucide="arrow-right"></i></a>
+        </div>
+      </section>
+    </main>
+
+    <!--kerf:foot-->
+    <script type="module" src="/src/site/design-page.ts"></script>
+  </body>
+</html>
