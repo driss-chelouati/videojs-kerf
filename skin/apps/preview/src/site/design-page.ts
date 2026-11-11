@@ -22,7 +22,7 @@ function render() {
   const w = sw < 760 ? sw : Math.round((sw - 2 * 28) / 3);
   const states: [Record<string, unknown>, string, string][] = [
     [{ img: './stills/w25.6.jpg', t: 25.6, hidden: true, playing: true }, 'Playing', 'The controls sink; the frame keeps a 2 px rail of progress.'],
-    [{ img: './stills/w23.2.jpg', t: 0, buf: 6, poster: true }, 'Ready', 'The play tile, optically centred, in its own thin frame.'],
+    [{ img: './stills/w23.2.jpg', t: 0, buf: 6, poster: true, hidden: true }, 'Ready', 'The picture stays whole until you reach for it; the play tile waits in its frame.'],
     [{ img: './stills/w30.jpg', t: 30.2, buf: 30.4, loading: true, playing: true }, 'Loading', 'The official spinner in the same tile.'],
     [{ img: './stills/w19.jpg', t: 19.3, vol: 72, playing: true }, 'Volume', 'A vertical slider rises from mute.'],
     [{ img: './stills/w43.jpg', t: 41.5, buf: 46, menu: 'speed', playing: true }, 'Speed', 'Six rates as chips; keyboard focus on the chosen one.'],

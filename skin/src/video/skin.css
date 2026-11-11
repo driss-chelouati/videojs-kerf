@@ -379,6 +379,19 @@
       background: radial-gradient(circle at 0 0, transparent calc(var(--kerf-ri) - 0.5px), var(--kerf-surface) var(--kerf-ri));
     }
 
+    /* Before the first play the picture stays whole: the band and the time tab fold away until someone moves the
+       pointer over the player, taps it, or tabs into it. Hosts that want controls on the poster set
+       data-poster-controls="show". */
+    :scope:not([data-poster-controls="show"]):not(:focus-within):has(.kerf-play:not([data-started])) .kerf-ui:not([data-user-active]) .kerf-band {
+      transform: translateY(calc(100% + var(--kerf-ri)));
+      transition-timing-function: var(--kerf-ease-in);
+    }
+
+    :scope:not([data-poster-controls="show"]):not(:focus-within):has(.kerf-play:not([data-started])) .kerf-ui:not([data-user-active]) .kerf-timetab {
+      transform: translateY(calc(100% + var(--kerf-band) + var(--kerf-ri)));
+      transition-timing-function: var(--kerf-ease-in);
+    }
+
     .kerf-ui:not([data-visible]) .kerf-timetab {
       transform: translateY(calc(100% + var(--kerf-band) + var(--kerf-ri)));
       transition-timing-function: var(--kerf-ease-in);

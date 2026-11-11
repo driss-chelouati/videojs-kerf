@@ -258,3 +258,6 @@
   .kd .k-mi:hover { background: var(--k-hover); }
 }
 .kd .k-btn, .kd .k-big, .kd .k-mi { transition: background-color .12s, color .12s; }
+
+/* before the first play there is no progress to keep: no rail under the poster */
+.kd.poster .k-rail { display: none; }

@@ -65,7 +65,7 @@ export function player(o: any): string {
   const status = o.status ? `<div class="k-status"><span class="fl tl"></span><span class="fl tr"></span>${I(o.status.icon)}<b style="font-weight:500">${o.status.text}</b>${o.status.of ? `<span class="of">${o.status.of}</span>` : ''}</div>` : '';
   const big = o.poster ? `<div class="k-big play">${I('play')}</div>` : o.loading ? `<div class="k-big spin">${I('spinner')}</div>` : '';
   const cap = o.capText ? `<div class="k-cap${o.hidden ? ' low' : ''}"><span>${o.capText}</span></div>` : '';
-  return `<div class="kd${o.hidden ? ' hidden' : ''}" data-theme="${o.theme || 'dark'}"${o.fs ? ' data-fs' : ''} style="width:${o.w}px;${o.accent ? `--media-accent-color:${o.accent};` : ''}">
+  return `<div class="kd${o.hidden ? ' hidden' : ''}${o.poster ? ' poster' : ''}" data-theme="${o.theme || 'dark'}"${o.fs ? ' data-fs' : ''} style="width:${o.w}px;${o.accent ? `--media-accent-color:${o.accent};` : ''}">
     <div class="k-win" style="aspect-ratio:${o.ratio || '16/9'}">
       <img class="k-media" src="${o.img}" alt="">
       ${o.loading || o.err ? '<div class="k-dim"></div>' : ''}

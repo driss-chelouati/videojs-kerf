@@ -18,6 +18,11 @@ opens rises out of the frame from its control; transient feedback hangs from the
 Time tab (current / duration), then the band: play, seek, mute (volume popover), captions, settings, fullscreen.
 Below 560 px of player width the captions button hides; captions stay in the settings menu.
 
+## Poster
+Before the first play the band and the time tab fold away while the user is idle; hover, a tap or keyboard focus
+inside the player brings them back. A paused player that has played keeps its controls. Opt out with
+`data-poster-controls="show"` on the skin root.
+
 ## Menus and popups
 Settings sits flush right with a square corner and the picture's corner redrawn above it. Speed offers six rates
 (0.5, 0.75, 1, 1.25, 1.5, 2) as a 3 x 2 grid of chips. Tooltips, volume and the preview are tabs with both fillets.
