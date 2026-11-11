@@ -292,14 +292,15 @@
     /* ------------------------------------------------------------------ the time tab */
     .kerf-timetab {
       position: absolute;
-      left: 0;
+      inset-inline-start: 0;
       bottom: calc(var(--kerf-band) - 1px);
       z-index: 2;
       height: var(--kerf-tab);
-      padding: 1px 12px 0 14px;
+      padding-block: 1px 0;
+      padding-inline: 14px 12px;
       display: flex;
       align-items: center;
-      border-top-right-radius: var(--kerf-fillet);
+      border-start-end-radius: var(--kerf-fillet);
       transition:
         transform var(--kerf-band-move) var(--kerf-ease-out),
         opacity 120ms;
@@ -313,7 +314,7 @@
     .kerf-timetab::before {
       content: "";
       position: absolute;
-      left: 0;
+      inset-inline-start: 0;
       bottom: 100%;
       width: var(--kerf-ri);
       height: var(--kerf-ri);
@@ -325,13 +326,18 @@
       );
     }
 
+    .kerf-timetab:dir(rtl)::before {
+      background: radial-gradient(circle at 0 0, transparent calc(var(--kerf-ri) - 0.5px), var(--kerf-surface) var(--kerf-ri));
+    }
+
     .kerf-ui:not([data-visible]) .kerf-timetab {
       transform: translateY(calc(100% + var(--kerf-band) + var(--kerf-ri)));
       transition-timing-function: var(--kerf-ease-in);
     }
 
-    /* While the preview window is up it shows the time, so the tab steps aside. */
-    .kerf-ui:has(.kerf-seek:is([data-pointing], [data-dragging])) .kerf-timetab {
+    /* While the preview window is up it shows the time, so the tab steps aside; so does the play tooltip's tab. */
+    .kerf-ui:has(.kerf-seek:is([data-pointing], [data-dragging])) .kerf-timetab,
+    .kerf-ui:has(.kerf-play + .kerf-tip:is([data-open], [data-ending-style])) .kerf-timetab {
       opacity: 0;
     }
 
@@ -717,6 +723,29 @@
       background: radial-gradient(circle at 0 0, transparent calc(var(--kerf-ri) - 0.5px), var(--kerf-surface) var(--kerf-ri));
     }
 
+    .kerf-menu:dir(rtl) {
+      --media-popover-align-offset: calc((var(--kerf-btn) + 2px) * -1);
+      border-radius: 0 var(--kerf-r) 0 0;
+      transform-origin: 0 100%;
+    }
+
+    .kerf-menu:dir(rtl)::after {
+      left: 0;
+      right: calc(var(--kerf-fillet) * -1);
+      background: radial-gradient(
+          circle at 100% 0,
+          transparent calc(var(--kerf-fillet) - 0.5px),
+          var(--kerf-surface) var(--kerf-fillet)
+        )
+        right bottom / var(--kerf-fillet) var(--kerf-fillet) no-repeat;
+    }
+
+    .kerf-menu:dir(rtl)::before {
+      right: auto;
+      left: 0;
+      background: radial-gradient(circle at 100% 0, transparent calc(var(--kerf-ri) - 0.5px), var(--kerf-surface) var(--kerf-ri));
+    }
+
     .kerf-menu-page {
       position: absolute;
       top: 0;
@@ -914,7 +943,8 @@
       translate: 1.1px 0;
     }
 
-    .kerf-start[data-started] {
+    .kerf-start[data-started],
+    :scope:has(.kerf-error[data-open]) .kerf-start {
       display: none;
     }
 
@@ -972,14 +1002,15 @@
 
     .kerf-error {
       position: absolute;
-      left: 50%;
+      left: 0;
       bottom: calc(var(--kerf-pad) + var(--kerf-band) - 1px);
       z-index: 5;
+      right: 0;
       width: min(340px, calc(100% - var(--kerf-pad) * 2 - 24px));
+      margin-inline: auto;
       padding: 18px 18px 8px;
       display: grid;
       gap: 4px;
-      translate: -50% 0;
       border-radius: var(--kerf-r) var(--kerf-r) 0 0;
       outline: none;
     }
@@ -997,6 +1028,7 @@
 
     .kerf-error-text {
       margin-bottom: 10px;
+      overflow-wrap: anywhere;
       font-size: 13px;
       line-height: 19px;
       color: var(--kerf-ink-2);
@@ -1224,7 +1256,7 @@
         --kerf-accent-ink: HighlightText;
         --kerf-ring: Highlight;
         --kerf-track: GrayText;
-        --kerf-buffer: CanvasText;
+        --kerf-buffer: GrayText;
         --kerf-hover: Canvas;
         forced-color-adjust: none;
         outline: 1px solid CanvasText;
