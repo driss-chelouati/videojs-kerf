@@ -11,7 +11,7 @@ const put = (id: string, html: string) => $(id).insertAdjacentHTML('beforeend', 
 const fit = (el: HTMLElement) => Math.round(el.clientWidth);
 
 function render() {
-  for (const id of ['hero-player', 'scrub', 'menu', 'layer-1', 'layer-2', 'layer-3', 'host-course', 'host-stream', 'host-notes']) {
+  for (const id of ['hero-player', 'scrub', 'menu', 'layer-1', 'layer-2', 'layer-3', 'bn-stream', 'bn-course', 'bn-notes']) {
     $(id).querySelectorAll('.kd, .num.pin').forEach((n) => n.remove());
   }
   put('hero-player', player({ w: fit($('hero-player')), img: './stills/w21.jpg', t: 21.4, buf: 31 }));
@@ -47,11 +47,14 @@ function render() {
     .join('');
 
   // At home in any product: the same drawing in three host contexts.
-  // Each host player fills its own column (the hidden hosts still lay out, so their widths are real).
-  const col = (id: string, max: number) => Math.round(Math.min(max, $(id).clientWidth));
-  $('host-course').innerHTML = player({ w: col('host-course', 900), theme: 'light', accent: '#3155ff', radius: 12, img: './stills/w21.jpg', t: 21.4, buf: 30 });
-  $('host-stream').innerHTML = player({ w: col('host-stream', 900), accent: '#f2552c', radius: 26, img: './stills/w27.jpg', t: 27.2, buf: 35, playing: true, scrub: { t: 33.6, img: './stills/w36.jpg' } });
-  $('host-notes').innerHTML = player({ w: col('host-notes', 700), theme: 'light', accent: '#6b5cf6', radius: 16, img: './stills/w11.jpg', t: 11.6, buf: 20, menu: 'main' });
+  // At home in any product: each drawn player is sized from its own box so its band always shows.
+  const fitIn = (id: string, ratio: number, spare = 0) => {
+    const el = $(id), box = el.getBoundingClientRect();
+    return Math.max(220, Math.floor(Math.min(box.width, (box.height - spare) * ratio)));
+  };
+  $('bn-stream').innerHTML = player({ w: fitIn('bn-stream', 16 / 9, 14), accent: '#f2552c', radius: 26, img: './stills/w27.jpg', t: 27.2, buf: 35, playing: true, scrub: { t: 33.6, img: './stills/w36.jpg' } });
+  $('bn-course').innerHTML = player({ w: fitIn('bn-course', 16 / 9, 14), theme: 'light', accent: '#3155ff', radius: 12, img: './stills/w21.jpg', t: 21.4, buf: 30 });
+  $('bn-notes').innerHTML = player({ w: fitIn('bn-notes', 16 / 9, 14), theme: 'light', accent: '#6b5cf6', radius: 16, img: './stills/w11.jpg', t: 11.6, buf: 20, menu: 'main' });
 
   // Exploded view: the same drawing, split into its three layers by CSS.
   const lw = Math.min(760, Math.round(innerWidth * (innerWidth < 760 ? 0.86 : 0.58)));
@@ -133,12 +136,6 @@ if (!reduce && matchMedia('(hover: hover) and (pointer: fine)').matches) {
     t.style.setProperty('--my', `${y * 100}%`);
   });
 }
-
-// ------------------------------------------------------------------ host switcher
-document.querySelector('.host-tabs')!.addEventListener('change', (e) => {
-  $('host-stage').dataset.host = (e.target as HTMLInputElement).value;
-  requestAnimationFrame(() => place($('host-stage')));
-});
 
 // ------------------------------------------------------------------ copy buttons on the install steps
 document.querySelectorAll<HTMLElement>('.steps .code').forEach((pre) => {

@@ -81,51 +81,91 @@
       </section>
 
       <section class="sec wrap" aria-labelledby="home-h">
-        <div class="sh"><h2 id="home-h">At home in any product</h2><p>The frame takes the host's surface, accent and radius. Three properties, no rebuild.</p></div>
-        <div class="hosts">
-          <div class="seg seg--3 host-tabs" role="radiogroup" aria-label="Host product">
-            <label><input type="radio" name="host" value="course" checked /><span>Course platform</span></label>
-            <label><input type="radio" name="host" value="stream" /><span>Streaming app</span></label>
-            <label><input type="radio" name="host" value="notes" /><span>Release notes</span></label>
-          </div>
-          <div class="host-stage" id="host-stage" data-host="course">
-            <article class="host host--course" aria-label="Course platform example">
-              <header class="host-bar"><i class="host-mark"></i><b>Fieldwork</b><nav><span>Courses</span><span class="on">Lessons</span><span>Notes</span></nav></header>
-              <div class="host-body">
-                <div class="host-main">
-                  <p class="host-k">Lesson 3 of 8</p>
-                  <h3>Write a brief your agents can follow</h3>
-                  <div class="host-player" id="host-course"></div>
-                </div>
-                <aside class="host-side">
-                  <p class="host-k">In this course</p>
-                  <ol><li>Start with the outcome</li><li>Name the constraints</li><li class="on">Write the brief</li><li>Review the first pass</li><li>Ship it</li></ol>
-                </aside>
+        <div class="sh"><h2 id="home-h">At home in any product</h2><p>Kerf takes the host's surface, accent and radius. No fork, no rebuild.</p></div>
+        <div class="bn">
+          <article class="bn-t bn-hero t-stream">
+            <div class="host-chip" aria-hidden="true"><i></i>Afterglow<span>Watch</span><span>Library</span></div>
+            <div class="bn-cap">
+              <h3>It wears your product</h3>
+              <p>On a dark streaming app, Kerf takes its orange and its 26 px corners. Nothing else changes.</p>
+            </div>
+            <div class="bn-vis" aria-hidden="true">
+              <div class="bn-player" id="bn-stream"></div>
+            </div>
+          </article>
+          <article class="bn-t t-code">
+            <div class="bn-cap">
+              <h3>Two properties, one attribute</h3>
+              <p>Accent and radius in your stylesheet, the surface on the skin root. No fork, no rebuild.</p>
+            </div>
+            <pre class="bn-code" aria-label="The two custom properties and the surface attribute"><code><span class="c">/* your stylesheet */</span>
+<span class="s">.kerf</span> {
+  <span class="p">--media-accent-color</span>: <span class="v">#f2552c</span>;
+  <span class="p">--media-border-radius</span>: <span class="v">26px</span>;
+}
+
+<span class="c">&lt;!-- the skin root --&gt;</span>
+<span class="s">&lt;media-container</span> <span class="p">class</span>="media-skin kerf"
+  <span class="p">data-surface</span>=<span class="v">"dark"</span><span class="s">&gt;</span></code></pre>
+            <div class="bn-attrs" aria-label="Switches on the skin root">
+              <span class="mono">data-surface="light"</span>
+              <span class="mono">data-surface="auto"</span>
+              <span class="mono">data-motion="reduce"</span>
+              <span class="mono">data-poster-controls="show"</span>
+            </div>
+          </article>
+          <article class="bn-t t-course">
+            <div class="bn-vis" aria-hidden="true">
+              <div class="mini mini--course">
+                <p class="mini-k">Lesson 3 of 8</p>
+                <p class="mini-h">Write a brief your agents can follow</p>
+                <div class="bn-player" id="bn-course"></div>
               </div>
-              <p class="host-code mono">--media-accent-color: #3155ff; --media-border-radius: 12px; data-surface="light"</p>
-            </article>
-            <article class="host host--stream" aria-label="Streaming app example">
-              <header class="host-bar"><i class="host-mark"></i><b>Afterglow</b><nav><span class="on">Watch</span><span>Library</span><span>Search</span></nav></header>
-              <div class="host-body">
-                <div class="host-main">
-                  <div class="host-player" id="host-stream"></div>
-                  <h3>The Sparvek launch</h3>
-                  <p class="host-meta">Short film, 46 s, 2026</p>
-                </div>
+            </div>
+            <div class="bn-cap">
+              <h3>Light, for a lesson</h3>
+              <p>A white frame, a cobalt accent, 12 px corners.</p>
+            </div>
+          </article>
+          <article class="bn-t t-notes">
+            <div class="bn-vis" aria-hidden="true">
+              <div class="mini mini--notes">
+                <p class="mini-k">Changelog, November</p>
+                <div class="bn-player" id="bn-notes"></div>
               </div>
-              <p class="host-code mono">--media-accent-color: #f2552c; --media-border-radius: 26px</p>
-            </article>
-            <article class="host host--notes" aria-label="Release notes example">
-              <header class="host-bar"><i class="host-mark"></i><b>Tessel</b><nav><span>Product</span><span class="on">Changelog</span><span>Docs</span></nav></header>
-              <div class="host-body host-body--narrow">
-                <p class="host-k">November 2026</p>
-                <h3>Agents now explain every step</h3>
-                <p class="host-p">Each run leaves a receipt: what was read, what was done, what is waiting for you.</p>
-                <div class="host-player" id="host-notes"></div>
-              </div>
-              <p class="host-code mono">--media-accent-color: #6b5cf6; --media-border-radius: 16px; data-surface="light"</p>
-            </article>
-          </div>
+            </div>
+            <div class="bn-cap">
+              <h3>Quiet, for release notes</h3>
+              <p>Violet on a soft lilac page, settings rising flush right.</p>
+            </div>
+          </article>
+          <article class="bn-t t-radius">
+            <div class="bn-vis" aria-hidden="true">
+              <svg class="corners" viewBox="0 0 220 160">
+                <path d="M8 160V60A52 52 0 0 1 60 8H220" />
+                <path d="M30 160V68A38 38 0 0 1 68 30H220" />
+                <path d="M52 160V78A26 26 0 0 1 78 52H220" />
+              </svg>
+              <p class="radius-num mono"><b>20</b><span>=</span><b>14</b><span>+</span><b>6</b></p>
+            </div>
+            <div class="bn-cap">
+              <h3>Any radius, still concentric</h3>
+              <p>Set the outer corner. The inner one and every notch follow.</p>
+            </div>
+          </article>
+          <article class="bn-t t-accent">
+            <div class="bn-cap">
+              <h3>One accent</h3>
+              <p>It fills the seek bar, the active rate and play on hover. Nowhere else.</p>
+            </div>
+            <div class="bands" aria-hidden="true">
+              <span style="--a:#d4f53c;--f:62%"><i></i><b></b></span>
+              <span style="--a:#3155ff;--f:48%"><i></i><b></b></span>
+              <span style="--a:#f2552c;--f:71%"><i></i><b></b></span>
+              <span style="--a:#8b7cff;--f:37%"><i></i><b></b></span>
+              <span style="--a:#2ec4a5;--f:55%"><i></i><b></b></span>
+            </div>
+          </article>
         </div>
       </section>
 
