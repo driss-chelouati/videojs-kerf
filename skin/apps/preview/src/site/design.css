@@ -1489,3 +1489,10 @@ figcaption b {
     font-size: 19px;
   }
 }
+
+.inline-link {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in oklab, var(--accent) 70%, transparent);
+  text-underline-offset: 3px;
+}
