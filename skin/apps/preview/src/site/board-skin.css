@@ -248,8 +248,7 @@
   .k-err { width: calc(100% - 24px); }
 }
 
-@container (width < 800px) { .k-big { --k-tile: 64px; --k-tile-icon: 26px; --k-tile-r: max(8px, calc(var(--k-r) - 3px)); } }
-@container (width < 560px) { .k-big { --k-tile: 56px; --k-tile-icon: 22px; --k-tile-r: max(8px, calc(var(--k-r) - 6px)); --k-tile-gap: 5px; } }
+@container (width < 1120px) { .k-big { --k-tile: clamp(44px, 6.8cqi, 76px); --k-tile-icon: calc(var(--k-tile) * .4); --k-tile-r: calc(var(--k-tile) * .26); --k-tile-gap: clamp(4px, calc(var(--k-tile) * .08), 6px); } }
 
 /* the drawings answer the pointer the way the live skin does */
 @media (hover: hover) {

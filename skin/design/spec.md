@@ -23,8 +23,9 @@ Settings sits flush right with a square corner and the picture's corner redrawn 
 (0.5, 0.75, 1, 1.25, 1.5, 2) as a 3 x 2 grid of chips. Tooltips, volume and the preview are tabs with both fillets.
 
 ## Motion
-Rise 200 ms cubic-bezier(.2, .8, .2, 1) from 0.94; sink 120 ms ease-in; band 240 ms. Transitions only, so an
-interrupted popup turns back from where it is. Reduced motion: everything instant.
+Rise 200 ms cubic-bezier(.2, .8, .2, 1), revealed from the notch's base (a clip-path, never a scale), so nothing
+passes the frame; sink 120 ms ease-in back into the band; status notches retract into the top edge inside the picture's
+clip; band 240 ms. Transitions only, so an interrupted popup turns back from where it is. Reduced motion: instant.
 
 ## Derived (not drawn on the board)
 - Volume popover shows no percentage; the volume indicator in the top notch reports it on key presses.

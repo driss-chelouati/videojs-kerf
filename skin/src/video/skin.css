@@ -55,6 +55,11 @@
       --kerf-ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
       --kerf-ease-in: cubic-bezier(0.4, 0, 1, 1);
       --kerf-hidden-scale: 0.94;
+      /* Notches are revealed from their base: open shows the whole tab plus its fillets, shut is a line on the band. */
+      --kerf-clip-open: inset(-24px -16px 0 -16px);
+      --kerf-clip-shut: inset(100% -16px 0 -16px);
+      --kerf-clip-open-down: inset(0 -16px -24px -16px);
+      --kerf-clip-shut-down: inset(0 -16px 100% -16px);
 
       container: kerf / inline-size;
       position: relative;
@@ -546,17 +551,16 @@
       padding: 6px 6px 7px;
       border-radius: var(--kerf-ri) var(--kerf-ri) 0 0;
       pointer-events: none;
-      transform-origin: 50% 100%;
       opacity: 0;
-      scale: var(--kerf-hidden-scale);
+      clip-path: var(--kerf-clip-shut);
       transition:
         opacity var(--kerf-sink) var(--kerf-ease-in),
-        scale var(--kerf-sink) var(--kerf-ease-in);
+        clip-path var(--kerf-sink) var(--kerf-ease-in);
     }
 
     .kerf-seek:is([data-pointing], [data-dragging]) .kerf-preview {
       opacity: 1;
-      scale: 1;
+      clip-path: var(--kerf-clip-open);
       transition-duration: var(--kerf-rise);
       transition-timing-function: var(--kerf-ease-out);
     }
@@ -622,14 +626,15 @@
       --media-popover-side-offset: calc(var(--kerf-gap) - 1px);
       --media-tooltip-boundary-offset: var(--kerf-pad);
       --media-popover-boundary-offset: var(--kerf-pad);
+      clip-path: var(--kerf-clip-open);
       transition:
         opacity var(--kerf-rise) var(--kerf-ease-out),
-        scale var(--kerf-rise) var(--kerf-ease-out);
+        clip-path var(--kerf-rise) var(--kerf-ease-out);
     }
 
     .kerf-popup:is([data-starting-style], [data-ending-style]) {
       opacity: 0;
-      scale: var(--kerf-hidden-scale);
+      clip-path: var(--kerf-clip-shut);
     }
 
     .kerf-popup[data-ending-style] {
@@ -741,7 +746,7 @@
       --media-popover-align-offset: calc(var(--kerf-btn) + 2px);
       transition:
         opacity var(--kerf-rise) var(--kerf-ease-out),
-        scale var(--kerf-rise) var(--kerf-ease-out),
+        clip-path var(--kerf-rise) var(--kerf-ease-out),
         height var(--kerf-rise) var(--kerf-ease-out),
         width var(--kerf-rise) var(--kerf-ease-out);
     }
@@ -1071,8 +1076,20 @@
       outline: none;
     }
 
-    .kerf-error:not([data-open]) {
+    .kerf-error:not([data-open]):not([data-ending-style]) {
       display: none;
+    }
+
+    .kerf-error {
+      clip-path: var(--kerf-clip-open);
+      transition:
+        opacity var(--kerf-rise) var(--kerf-ease-out),
+        clip-path var(--kerf-rise) var(--kerf-ease-out);
+    }
+
+    .kerf-error:is([data-starting-style], [data-ending-style]) {
+      opacity: 0;
+      clip-path: var(--kerf-clip-shut);
     }
 
     .kerf-error-title {
@@ -1112,18 +1129,17 @@
     /* ------------------------------------------------------------------ the status notch hangs from the top edge */
     .kerf-status {
       position: absolute;
-      top: var(--kerf-pad);
-      left: 50%;
+      inset: var(--kerf-pad);
       z-index: 6;
-      display: grid;
-      translate: -50% 0;
+      clip-path: inset(0 round var(--kerf-ri));
       pointer-events: none;
     }
 
     .kerf-indicator {
-      grid-area: 1 / 1;
-      position: relative;
-      justify-self: center;
+      position: absolute;
+      top: 0;
+      left: 50%;
+      translate: -50% 0;
       height: 38px;
       padding: 0 16px 0 12px;
       display: flex;
@@ -1134,10 +1150,10 @@
       font-weight: 500;
       font-variant-numeric: tabular-nums;
       white-space: nowrap;
-      transform-origin: 50% 0;
+      clip-path: var(--kerf-clip-open-down);
       transition:
         opacity var(--kerf-rise) var(--kerf-ease-out),
-        translate var(--kerf-rise) var(--kerf-ease-out);
+        clip-path var(--kerf-rise) var(--kerf-ease-out);
     }
 
     /* Fillets meet the top edge instead of the band. */
@@ -1153,7 +1169,7 @@
 
     .kerf-indicator:not([data-open]) {
       opacity: 0;
-      translate: 0 -100%;
+      clip-path: var(--kerf-clip-shut-down);
       transition-duration: var(--kerf-sink);
       transition-timing-function: var(--kerf-ease-in);
     }
@@ -1164,14 +1180,14 @@
       display: none;
     }
 
-    media-volume-indicator[data-level="high"] .kerf-volume-high-icon,
-    media-volume-indicator[data-level="low"] .kerf-volume-low-icon,
-    media-volume-indicator[data-level="off"] .kerf-volume-off-icon,
-    media-status-indicator[data-status="captions-on"] .kerf-status-captions-on,
-    media-status-indicator[data-status="captions-off"] .kerf-status-captions-off,
-    media-status-indicator[data-status="fullscreen"] .kerf-status-fullscreen,
-    media-status-indicator[data-status="exit-fullscreen"] .kerf-status-exit-fullscreen,
-    media-seek-indicator .kerf-seek-icon {
+    media-volume-indicator[data-level="high"] .kerf-indicator-icon.kerf-volume-high-icon,
+    media-volume-indicator[data-level="low"] .kerf-indicator-icon.kerf-volume-low-icon,
+    media-volume-indicator[data-level="off"] .kerf-indicator-icon.kerf-volume-off-icon,
+    media-status-indicator[data-status="captions-on"] .kerf-indicator-icon.kerf-status-captions-on,
+    media-status-indicator[data-status="captions-off"] .kerf-indicator-icon.kerf-status-captions-off,
+    media-status-indicator[data-status="fullscreen"] .kerf-indicator-icon.kerf-status-fullscreen,
+    media-status-indicator[data-status="exit-fullscreen"] .kerf-indicator-icon.kerf-status-exit-fullscreen,
+    media-seek-indicator .kerf-indicator-icon.kerf-seek-icon {
       display: block;
     }
 
@@ -1257,23 +1273,18 @@
     }
 
     /* ------------------------------------------------------------------ narrow players */
-    /* The centre tile steps down with the player: 76 on desktop, 64 on tablet, 56 on phone. */
-    @container kerf (width < 800px) {
+    /* The centre tile scales with the player: 76 px at desktop widths, never under the 44 px touch target. Its icon,
+       radius and frame scale with it, so the tile and its frame stay concentric. */
+    @container kerf (width < 1120px) {
       .kerf-tile {
-        --kerf-tile: 64px;
-        --kerf-tile-icon: 26px;
-        --kerf-tile-r: max(8px, calc(var(--kerf-r) - 3px));
+        --kerf-tile: clamp(44px, 6.8cqi, 76px);
+        --kerf-tile-icon: calc(var(--kerf-tile) * 0.4);
+        --kerf-tile-r: calc(var(--kerf-tile) * 0.26);
+        --kerf-tile-gap: clamp(4px, calc(var(--kerf-tile) * 0.08), 6px);
       }
     }
 
     @container kerf (width < 560px) {
-      .kerf-tile {
-        --kerf-tile: 56px;
-        --kerf-tile-icon: 22px;
-        --kerf-tile-r: max(8px, calc(var(--kerf-r) - 6px));
-        --kerf-tile-gap: 5px;
-      }
-
       .kerf-captions {
         display: none;
       }

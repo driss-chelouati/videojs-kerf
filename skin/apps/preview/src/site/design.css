@@ -712,19 +712,19 @@ figcaption b {
   0%,
   12% {
     opacity: 0;
-    scale: 0.94;
+    clip-path: inset(100% -10px 0 -10px);
     animation-timing-function: cubic-bezier(0.2, 0.8, 0.2, 1);
   }
   21%,
   70% {
     opacity: 1;
-    scale: 1;
+    clip-path: inset(-10px -10px 0 -10px);
     animation-timing-function: cubic-bezier(0.4, 0, 1, 1);
   }
   75%,
   100% {
     opacity: 0;
-    scale: 0.94;
+    clip-path: inset(100% -10px 0 -10px);
   }
 }
 
