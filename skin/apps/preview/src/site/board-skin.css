@@ -261,3 +261,9 @@
 
 /* before the first play there is no progress to keep: no rail under the poster */
 .kd.poster .k-rail { display: none; }
+
+/* The picture stops above the band whenever the band is up, so no picture pixel sits under the window's bottom corners:
+   two clips on one curve would let the picture bleed through the anti-aliased edge. */
+.kd:not(.hidden) .k-media { clip-path: inset(0 0 calc(var(--k-band) - 2px) 0); }
+/* and the window's own ground is the frame colour, so its anti-aliased corner has nothing darker to show */
+.kd .k-win { background: var(--k-surface); }
