@@ -1,40 +1,34 @@
-# Kerf submission reel: plan (awaiting Driss's go)
+# Kerf submission reel: plan (Driss's go, 2026-11-11; tightened after the Iris reel)
 
-Format: 1920x1080, 30 fps, 120 BPM (beat 15 f, bar 60 f), about 48 s (24 bars), scored and silent.
-Optional second cut 1080x1350 for the Contra feed. Not an Orvio reel: no Orvio hook or end card.
+Format: 1920x1080, 30 fps, 128.57 BPM (beat 14 f, bar 56 f), 19 bars = 1064 f = 35.5 s, scored and silent.
+Not an Orvio reel: no Orvio hook or end card.
+
+## Position
+The video player for modern products: SaaS, product sites, minimal design. Serious, precise, energetic. No jokes,
+no claims about other players, no superlatives about ourselves. The product shows; the copy names what it does.
+
+## Against the Iris reel (53 s, screen recording of its site, text left / player right, a cartoon film, crossfades)
+Shorter, one bespoke scene instead of a screen capture, a real product film inside the player, one signature move
+(the cut), one 3D move (exploded layers), one wall of players (make it yours), cuts on the beat, motion blur from speed.
 
 ## Motion contract
-- Personality: precise, quiet confidence. One easing family (out-expo / in-out-cubic), springs soft for the frame,
-  snap for notches, pop for the tile. Every notch rises with the skin's own reveal (clip from its base), never a scale.
-- Motif: the kerf, the stepped saw line from the Kerf mark. It opens the reel (cuts the black in two), makes the turn
-  (cuts the picture to make room for the band), and closes it (the lockup).
-- Signature move (new): **the cut**. The film plays full-bleed; a lime saw line runs across its lower edge with the
-  time tab's step; the picture parts along it and the frame rises out of the cut as the band and the time tab.
-- World: dark void, one soft pool of the accent under the player, fine grain. The picture inside the player is the
-  Sparvek film itself, frame-exact (footage plate), so the skin always shows real content.
-- Chrome: kinetic captions, one short line per section, sentence case, set small. No HUD, no claims about others.
-- Camera: slow orbit and push on the player; one 3D exploded orbit; damped settles.
-- Score: pad and plucks at 120 BPM, foley for every notch (tick on rise, soft thud on sink, a fine saw for the cut),
-  -14 LUFS.
+- Precise, quiet confidence, energetic tempo. Out-expo arrivals, in-out-quint camera, inertial tilt from velocity.
+- Motif: the kerf, the stepped saw line of the Kerf mark: it opens, it makes the turn (the cut), it closes.
+- World: dark void, one pool of the accent under the subject, fine grain.
+- Notches move as in the skin: revealed from their base, solid, never faded.
+- Captions: one line, Geist 600, sentence case, words rising on 16ths, held a full bar.
 
-## Beat sheet (bars of 2 s)
-| Bars | Section | Hero motion | Caption |
+## Beat sheet (bars of 56 f)
+| Bars | Frames | Section | Caption |
 |---|---|---|---|
-| 1-2 | Open | a lime saw line draws the stepped kerf across black; the two halves part into the Kerf mark; wordmark rises | Kerf. A Video.js 10 skin. |
-| 3-4 | The usual way | the film full-bleed with floating white icons; over the lime scene they fade into the picture | Controls usually float on the picture. |
-| 5-6 | The cut (signature) | the saw line cuts the picture; the frame rises out of the cut as the band and the time tab | Kerf cuts the picture instead. |
-| 7-8 | Scrub | cursor glides along the chapter kerfs; the preview window rises with real storyboard frames and chapter names | Every preview rises from the frame. |
-| 9-10 | Menus and volume | settings rises flush right, speed chips, volume slider rises from mute, a tooltip tab | Menus open from their own notch. |
-| 11 | Feedback | keycaps L and M; the status notch hangs from the top edge, retracts | Feedback hangs from the top. |
-| 12-13 | Three layers | orbit into an exploded 3D view: picture, frame and band, notches | One surface, three layers. |
-| 14-15 | Radius | corners morph 8 to 32 px, formula rolls on an odometer, concentric guides draw | Outer = inner + frame. |
-| 16-17 | Your colours | the accent cycles lime, cobalt, signal, iris; a theme flip to the light frame | Your surface. Your accent. |
-| 18-19 | Phone | the player morphs from desktop 16:9 into the 9:16 phone layout; the tile scales | Same skin, any width. |
-| 20-21 | Access | a focus ring travels by Tab; bright and dark scenes pass behind a band that never changes contrast | Readable over any picture. Keyboard all the way. |
-| 22 | Sink | the film plays, the band sinks, the picture is whole, the rail keeps time | Out of the way when you watch. |
-| 23-24 | End | lockup; "A Video.js 10 skin"; Powered by Video.js; film credit; the site URL | |
-
-## Inputs still needed
-- Driss's go on this plan.
-- The Iris reel (link or file) to measure against.
-- The public URL for the end card (after deploy).
+| 1-2 | 0-111 | the saw line cuts the black; two pieces meet as the Kerf mark; wordmark | Kerf. A video player for modern products. |
+| 3 | 112-167 | the film in a bare rounded picture, white icons floating on it | Most controls float on the picture. |
+| 4-5 | 168-279 | THE CUT: the saw line runs along the picture's lower edge; the frame rises out of it | Kerf cuts the picture instead. |
+| 6-7 | 280-391 | push in; cursor scrubs the chapters; the preview window rises with storyboard frames | Previews rise from the frame. |
+| 8-9 | 392-503 | settings rises flush right; speed chips; 1.25x; volume rises from mute | Every menu has its own notch. |
+| 10 | 504-559 | keycaps: Tab hops the focus ring; L hangs "+10 s" from the top edge | Every control by keyboard. |
+| 11-12 | 560-671 | orbit into the exploded view: picture, frame and band, notches | One surface, three layers. |
+| 13-14 | 672-783 | the wall: nine Kerf players in different accents, surfaces and radii; camera pulls back | Your colour. Your radius. Your product. |
+| 15-16 | 784-895 | the player morphs from desktop into the 9:16 phone layout | Desktop to phone. |
+| 17 | 896-951 | the band sinks, the picture is whole, the rail keeps time | Out of the way when you watch. |
+| 18-19 | 952-1063 | the saw line cuts the player back into the mark; lockup; Powered by Video.js | A Video.js 10 skin. |
