@@ -20,7 +20,8 @@
     <!--kerf:top:player-->
 
     <main class="app" id="app">
-      <section class="stage" aria-label="The Kerf player">
+      <section class="stage" aria-labelledby="page-title">
+        <h1 class="sr-only" id="page-title">Kerf, a Video.js 10 skin, playing the Sparvek launch film</h1>
         <div class="stage-glow" aria-hidden="true"></div>
         <div class="stage-grid" aria-hidden="true"></div>
         <div class="stage-center">
@@ -87,8 +88,8 @@
           </fieldset>
 
           <fieldset class="group">
-            <legend>Corner radius <output class="hint mono" id="radius-out">20 = 14 + 6</output></legend>
-            <input class="range" type="range" name="radius" min="8" max="32" step="2" value="20" aria-describedby="radius-help" />
+            <legend id="radius-legend">Corner radius <output class="hint mono" id="radius-out">20 = 14 + 6</output></legend>
+            <input class="range" type="range" name="radius" min="8" max="32" step="2" value="20" aria-label="Corner radius" aria-describedby="radius-help" />
             <p class="note" id="radius-help">Outer radius = inner radius + frame. Drag it: every corner stays concentric.</p>
           </fieldset>
 

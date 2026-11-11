@@ -60,11 +60,11 @@ export function frameTop(page: 'player' | 'design'): string {
       ? `<button class="btn btn--quiet" type="button" aria-expanded="false" aria-controls="drawer" data-customize>${icon('sliders-horizontal')}<span>Customize</span></button>`
       : `<a class="btn btn--quiet" href="./index.html"><span>Try the player</span>${icon('arrow-right')}</a>`;
   return `
-    <div class="announce" id="announce">
+    <aside class="announce" id="announce" aria-label="Announcement">
       <p><span class="announce-mark" aria-hidden="true"></span>Kerf is an entry to the Video.js 10 Skins Challenge.
       ${page === 'player' ? `<a href="./design.html">Read the design notes${icon('arrow-right')}</a>` : `<a href="./index.html">Play the film${icon('arrow-right')}</a>`}</p>
       <button class="icon-btn icon-btn--sm" type="button" aria-label="Dismiss" data-dismiss>${icon('x')}</button>
-    </div>
+    </aside>
     <header class="topbar">
       <a class="brand" href="./index.html" aria-label="Kerf, home">${lockup}</a>
       <nav class="pillnav" aria-label="Pages">

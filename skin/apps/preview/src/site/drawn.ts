@@ -22,7 +22,7 @@ export function player(o: any): string {
     const hl = ptr != null && ptr >= s && ptr < e;
     return `<div class="k-ch${hl ? ' hl' : ''}" style="flex:${e - s} 1 0"><i class="buf" style="width:${b * 100}%"></i>${p ? `<i class="ptr" style="width:${p * 100}%"></i>` : ''}<i class="fill" style="width:${f * 100}%"></i></div>`;
   }).join('');
-  const btn = (cls, icon, extra = '') => `<button class="k-btn ${cls}" data-b="${cls.split(' ')[0]}">${I(icon)}${extra}</button>`;
+  const btn = (cls, icon, extra = '') => `<span class="k-btn ${cls}" data-b="${cls.split(' ')[0]}">${I(icon)}${extra}</span>`;
   const hov = o.hov || '', foc = o.focus || '';
   const st = k => (hov === k ? ' hov' : '') + (foc === k ? ' focus' : '');
   const playing = !!o.playing;
@@ -60,12 +60,12 @@ export function player(o: any): string {
       <div class="mh">${I('chevron')}Speed</div>
       <div class="k-rates">${['0.5×', '0.75×', '1×', '1.25×', '1.5×', '2×'].map(v => `<span class="${v === '1.25×' ? 'sel kb' : ''}">${v}</span>`).join('')}</div></div>`;
   if (o.err) pops += `<div class="k-tab k-err" data-center><span class="fl bl"></span><span class="fl br"></span>
-      <h4>Something went wrong.</h4><p>The film could not load. Check the connection, then press play again.</p>
+      <b class="k-err-t">Something went wrong.</b><p>The film could not load. Check the connection, then press play again.</p>
       <div class="acts"><span class="pri">OK</span></div></div>`;
   const status = o.status ? `<div class="k-status"><span class="fl tl"></span><span class="fl tr"></span>${I(o.status.icon)}<b style="font-weight:500">${o.status.text}</b>${o.status.of ? `<span class="of">${o.status.of}</span>` : ''}</div>` : '';
   const big = o.poster ? `<div class="k-big play">${I('play')}</div>` : o.loading ? `<div class="k-big spin">${I('spinner')}</div>` : '';
   const cap = o.capText ? `<div class="k-cap${o.hidden ? ' low' : ''}"><span>${o.capText}</span></div>` : '';
-  return `<div class="kd${o.hidden ? ' hidden' : ''}${o.poster ? ' poster' : ''}" data-theme="${o.theme || 'dark'}"${o.fs ? ' data-fs' : ''} style="width:${o.w}px;${o.accent ? `--media-accent-color:${o.accent};` : ''}">
+  return `<div aria-hidden="true" class="kd${o.hidden ? ' hidden' : ''}${o.poster ? ' poster' : ''}" data-theme="${o.theme || 'dark'}"${o.fs ? ' data-fs' : ''} style="width:${o.w}px;${o.accent ? `--media-accent-color:${o.accent};` : ''}">
     <div class="k-win" style="aspect-ratio:${o.ratio || '16/9'}">
       <img class="k-media" src="${o.img}" alt="">
       ${o.loading || o.err ? '<div class="k-dim"></div>' : ''}

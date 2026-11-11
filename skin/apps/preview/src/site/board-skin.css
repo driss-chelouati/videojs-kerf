@@ -186,7 +186,7 @@
 .k-rates span.kb { box-shadow: 0 0 0 2px var(--k-surface), 0 0 0 4px var(--k-ink); }
 
 .k-err { width: 340px; padding: 18px 18px 8px; border-radius: var(--k-r) var(--k-r) 0 0; }
-.k-err h4 { margin: 0 0 4px; font-size: 15px; line-height: 20px; font-weight: 600; letter-spacing: -.005em; }
+.k-err .k-err-t { display: block; margin: 0 0 4px; font-size: 15px; line-height: 20px; font-weight: 600; letter-spacing: -.005em; }
 .k-err p { margin: 0 0 14px; font-size: 13px; line-height: 19px; color: var(--k-ink2); }
 .k-err .acts { display: flex; gap: 6px; }
 .k-err .acts span { display: grid; place-items: center; height: 40px; padding: 0 16px; border-radius: 12px; font-size: 13.5px; font-weight: 600; }

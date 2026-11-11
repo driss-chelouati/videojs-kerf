@@ -8,7 +8,7 @@
   --raise: #1c1c1f;
   --ink: #f4f4f2;
   --ink-2: rgb(244 244 242 / 0.64);
-  --ink-3: rgb(244 244 242 / 0.4);
+  --ink-3: rgb(244 244 242 / 0.58);
   --line: rgb(255 255 255 / 0.08);
   --line-2: rgb(255 255 255 / 0.14);
   --accent: #d4f53c;
@@ -30,7 +30,7 @@
   --raise: #ffffff;
   --ink: #141416;
   --ink-2: rgb(20 20 22 / 0.64);
-  --ink-3: rgb(20 20 22 / 0.42);
+  --ink-3: rgb(20 20 22 / 0.62);
   --line: rgb(20 20 22 / 0.09);
   --line-2: rgb(20 20 22 / 0.16);
   --glow: color-mix(in oklab, var(--accent) 22%, transparent);
@@ -47,7 +47,7 @@
     --raise: #ffffff;
     --ink: #141416;
     --ink-2: rgb(20 20 22 / 0.64);
-    --ink-3: rgb(20 20 22 / 0.42);
+    --ink-3: rgb(20 20 22 / 0.62);
     --line: rgb(20 20 22 / 0.09);
     --line-2: rgb(20 20 22 / 0.16);
     --glow: color-mix(in oklab, var(--accent) 22%, transparent);
@@ -1175,4 +1175,13 @@ kbd {
     transition-duration: 0s !important;
     animation-duration: 0s !important;
   }
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
 }

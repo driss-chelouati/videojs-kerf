@@ -760,8 +760,7 @@ figcaption b {
 
 @keyframes word {
   from {
-    opacity: 0.16;
-    filter: blur(1px);
+    opacity: 0.5;
   }
 }
 
