@@ -748,14 +748,16 @@
     /* Settings: flush with the right of the frame, its corner square, the picture's corner redrawn above it. */
     .kerf-menu {
       z-index: 20;
-      width: 248px;
-      max-width: calc(100cqw - var(--kerf-pad) * 2);
+      /* It runs under the bezel (same colour) by one frame width, so no seam can open at the picture's edge. */
+      width: calc(248px + var(--kerf-pad));
+      max-width: calc(100cqw - var(--kerf-pad));
       height: var(--media-menu-height);
       max-height: var(--media-menu-available-height);
       border-radius: var(--kerf-r) 0 0 0;
       transform-origin: 100% 100%;
       /* align=end puts the menu's right edge on the gear's; one button and a gap more puts it on the frame. */
-      --media-popover-align-offset: calc(var(--kerf-btn) + 2px);
+      --media-popover-align-offset: calc(var(--kerf-btn) + 2px + var(--kerf-pad));
+      --media-popover-boundary-offset: 0px;
       /* No size transition and no fade: the menu is placed against the frame's right edge at its final size, and it
          rises and sinks as solid frame material. */
       transition: clip-path var(--kerf-rise) var(--kerf-ease-out);
@@ -774,7 +776,7 @@
     .kerf-menu::before {
       content: "";
       position: absolute;
-      right: 0;
+      right: var(--kerf-pad);
       bottom: 100%;
       width: var(--kerf-ri);
       height: var(--kerf-ri);
@@ -783,7 +785,7 @@
     }
 
     .kerf-menu:dir(rtl) {
-      --media-popover-align-offset: calc((var(--kerf-btn) + 2px) * -1);
+      --media-popover-align-offset: calc((var(--kerf-btn) + 2px + var(--kerf-pad)) * -1);
       border-radius: 0 var(--kerf-r) 0 0;
       transform-origin: 0 100%;
     }
@@ -801,15 +803,15 @@
 
     .kerf-menu:dir(rtl)::before {
       right: auto;
-      left: 0;
+      left: var(--kerf-pad);
       background: radial-gradient(circle at 100% 0, transparent calc(var(--kerf-ri) - 0.5px), var(--kerf-surface) var(--kerf-ri));
     }
 
     .kerf-menu-page {
       position: absolute;
       top: 0;
-      inset-inline: 0;
-      width: 100%;
+      inset-inline: 0 var(--kerf-pad);
+      width: auto;
       max-height: 100%;
       padding: 6px 6px 4px;
       display: flex;
@@ -859,8 +861,8 @@
       background: var(--kerf-hover);
     }
 
-    .kerf-menu-item[data-highlighted=""],
-    .kerf-menu-back[data-highlighted=""] {
+    .kerf-menu-item[data-highlighted=""]:focus-visible,
+    .kerf-menu-back[data-highlighted=""]:focus-visible {
       box-shadow: inset 0 0 0 2px var(--kerf-ring);
     }
 
@@ -960,7 +962,7 @@
       color: var(--kerf-accent-ink);
     }
 
-    .kerf-rate[data-highlighted=""] {
+    .kerf-rate[data-highlighted=""]:focus-visible {
       box-shadow: 0 0 0 2px var(--kerf-surface), 0 0 0 4px var(--kerf-ring);
     }
 
